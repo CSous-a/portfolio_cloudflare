@@ -3,7 +3,7 @@
     <div class="container">
       <div class="hero-content">
         <p class="hero-greeting">
-          <span class="prompt">$</span> hello world
+          <span class="prompt">$</span> Jr Developer
         </p>
         <h1 class="hero-name">
           <span class="name-line">Caio</span>
@@ -31,10 +31,7 @@
       </div>
       <div class="hero-visual" aria-hidden="true">
         <div class="pixel-avatar">
-          <div class="avatar-grid">
-            <span v-for="(cell, i) in avatarGrid" :key="i"
-              class="cell" :class="cell" :style="{ animationDelay: `${i * 20}ms` }"></span>
-          </div>
+          <img src="/hero_avatar.png" alt="Caio Sousa" class="avatar-img" />
         </div>
         <div class="floating-tags">
           <span v-for="tag in tags" :key="tag" class="tag">{{ tag }}</span>
@@ -52,19 +49,22 @@
 import { ref, onMounted } from 'vue';
 
 const roles = [
-  'Full-Stack Developer',
-  'Vue.js Enthusiast',
-  'Pixel Art Fan',
+  'Java Lover',
+  'Vue.js Fan',
   'Problem Solver',
+  'Springboot adept',
+  'Agile best friend',
+  'Continuous Learner',
+  'Team Player'
 ];
 
 const stats = [
-  { value: '3+', label: 'anos de exp.' },
-  { value: '20+', label: 'projetos' },
+  { value: '3', label: 'anos de exp.' },
+  { value: '5+', label: 'projetos' },
   { value: '∞', label: 'café' },
 ];
 
-const tags = ['Vue', 'Astro', 'Node', 'Python', 'SQL', 'Docker'];
+const tags = ['Vue','Javascript','React' ,'Python','Java', 'SQL','NOSQL', 'Docker','Git', 'Junit', 'Linux Server'];
 
 const displayedRole = ref('');
 const typing = ref(true);
@@ -94,17 +94,6 @@ function tick() {
   }
 }
 
-// pixel avatar pattern (0=bg, g=green, c=cyan, p=purple)
-const avatarGrid = [
-  '','','g','g','g','g','','',
-  '','g','g','g','g','g','g','',
-  'g','g','c','g','g','c','g','g',
-  'g','g','g','g','g','g','g','g',
-  'g','g','g','p','p','g','g','g',
-  'g','g','p','g','g','p','g','g',
-  '','g','g','g','g','g','g','',
-  '','','g','g','g','g','','',
-];
 
 onMounted(() => setTimeout(tick, 500));
 </script>
@@ -231,9 +220,10 @@ onMounted(() => setTimeout(tick, 500));
 
 .pixel-avatar {
   border: 2px solid var(--border);
-  padding: 24px;
+  padding: 12px;
   position: relative;
   background: var(--bg-card);
+  display: inline-block;
 }
 
 .pixel-avatar::before {
@@ -248,28 +238,16 @@ onMounted(() => setTimeout(tick, 500));
   padding: 0 6px;
 }
 
-.avatar-grid {
-  display: grid;
-  grid-template-columns: repeat(8, 24px);
-  grid-template-rows: repeat(8, 24px);
-  gap: 2px;
+.avatar-img {
+  display: block;
+  width: 190px;
+  height: auto;
+  filter: grayscale(20%) contrast(1.05);
+  transition: filter 0.3s;
 }
 
-.cell {
-  width: 24px;
-  height: 24px;
-  background: var(--bg);
-  animation: cellIn 0.3s ease forwards;
-  opacity: 0;
-}
-
-.cell.g { background: var(--green); box-shadow: 0 0 8px rgba(0,255,65,0.4); }
-.cell.c { background: var(--cyan); box-shadow: 0 0 8px rgba(0,229,255,0.4); }
-.cell.p { background: var(--purple); box-shadow: 0 0 8px rgba(191,90,242,0.4); }
-
-@keyframes cellIn {
-  from { opacity: 0; transform: scale(0); }
-  to   { opacity: 1; transform: scale(1); }
+.pixel-avatar:hover .avatar-img {
+  filter: grayscale(0%) contrast(1.1) drop-shadow(0 0 12px rgba(0,255,65,0.3));
 }
 
 .floating-tags {

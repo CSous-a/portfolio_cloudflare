@@ -89,7 +89,7 @@ const sent = ref(false);
 const form = reactive({ name: '', email: '', message: '' });
 
 const links = [
-  { icon: '📧', label: 'Email', value: 'caio.sousa@geopixel.com.br', href: 'mailto:caio.sousa@geopixel.com.br' },
+  { icon: '📧', label: 'Email', value: 'csousa.profissional@gmail.com.br', href: 'mailto:caio.sousa@geopixel.com.br' },
   { icon: '🐙', label: 'GitHub', value: 'github.com/CSous-a', href: 'https://github.com/CSous-a' },
   { icon: '💼', label: 'LinkedIn', value: '/in/caio-sousa', href: 'https://linkedin.com/in/caio-sousa' },
 ];
