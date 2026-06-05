@@ -9,7 +9,7 @@
             {{ group.name }}
             <span class="group-bracket">]</span>
           </h3>
-          <div class="skill-list">
+          <div class="skill-list" :style="{ '--group-color': `var(--${group.color})` }">
             <div class="skill-item" v-for="skill in group.skills" :key="skill.name">
               <div class="skill-header">
                 <span class="skill-name">{{ skill.name }}</span>
@@ -23,14 +23,6 @@
           </div>
         </div>
       </div>
-      <div class="tools-section">
-        <h3 class="group-title">
-          <span class="group-bracket">[</span>tools<span class="group-bracket">]</span>
-        </h3>
-        <div class="tools-grid">
-          <span class="tool-badge" v-for="tool in tools" :key="tool">{{ tool }}</span>
-        </div>
-      </div>
     </div>
   </section>
 </template>
@@ -41,48 +33,45 @@ const groups = [
     name: 'Frontend',
     color: 'green',
     skills: [
-      { name: 'Vue.js', level: 90 },
-      { name: 'Astro', level: 85 },
-      { name: 'TypeScript', level: 80 },
-      { name: 'CSS / Tailwind', level: 88 },
+      { name: 'Vue.js', level: 70 },
+      { name: 'React', level: 50 },
+      { name: 'TypeScript', level: 60 },
+      { name: 'CSS / Tailwind', level: 65 },
     ],
   },
   {
     name: 'Backend',
     color: 'cyan',
     skills: [
-      { name: 'Node.js', level: 85 },
-      { name: 'Python', level: 78 },
-      { name: 'PostgreSQL', level: 82 },
-      { name: 'REST / GraphQL', level: 80 },
+      { name: 'Java', level: 75 },
+      { name: 'Python', level: 55 },
+      { name: 'Rust', level: 40 },
+      { name: 'SpringBoot', level: 75 },
     ],
   },
   {
-    name: 'GeoData',
+    name: 'Data & Geo',
     color: 'purple',
     skills: [
       { name: 'PostGIS', level: 75 },
-      { name: 'QGIS', level: 70 },
-      { name: 'Mapbox / Leaflet', level: 80 },
-      { name: 'GeoJSON / WMS', level: 78 },
+      { name: 'Postgres', level: 95 },
+      { name: 'MongoDB', level: 60 },
+      { name: 'MySQL', level: 75 },
     ],
   },
   {
     name: 'DevOps',
     color: 'yellow',
     skills: [
-      { name: 'Docker', level: 75 },
-      { name: 'CI/CD', level: 70 },
-      { name: 'Linux', level: 80 },
-      { name: 'Nginx', level: 68 },
+      { name: 'Docker', level: 70 },
+      { name: 'Git', level: 90 },
+      { name: 'Linux Server', level: 80 },
+      { name: 'Cloudflare', level: 56 },
     ],
   },
 ];
 
-const tools = [
-  'Git', 'VSCode', 'Figma', 'Insomnia', 'Cloudflare', 'Vercel',
-  'Supabase', 'Redis', 'pnpm', 'Vite', 'Vitest', 'GitHub Actions',
-];
+
 </script>
 
 <style scoped>
@@ -114,6 +103,25 @@ const tools = [
   display: flex;
   flex-direction: column;
   gap: 14px;
+  max-height: 188px;
+  overflow-y: auto;
+  padding-right: 6px;
+  scrollbar-width: thin;
+  scrollbar-color: var(--group-color) var(--bg);
+}
+
+.skill-list::-webkit-scrollbar {
+  width: 4px;
+}
+
+.skill-list::-webkit-scrollbar-track {
+  background: var(--bg);
+  border: 1px solid var(--border);
+}
+
+.skill-list::-webkit-scrollbar-thumb {
+  background: var(--group-color);
+  box-shadow: 0 0 6px var(--group-color);
 }
 
 .skill-header {

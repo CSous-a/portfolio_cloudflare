@@ -55,7 +55,8 @@ const roles = [
   'Springboot adept',
   'Agile best friend',
   'Continuous Learner',
-  'Team Player'
+  'Team Player',
+  'Rust enthusiast',
 ];
 
 const stats = [
@@ -64,7 +65,7 @@ const stats = [
   { value: '∞', label: 'café' },
 ];
 
-const tags = ['Vue','Javascript','React' ,'Python','Java', 'SQL','NOSQL', 'Docker','Git', 'Junit', 'Linux Server'];
+const tags = ['Vue','Javascript','React' ,'Python','Java', 'SQL','NOSQL', 'Docker','Git', 'Rust', 'Linux Server'];
 
 const displayedRole = ref('');
 const typing = ref(true);
