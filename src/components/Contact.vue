@@ -57,12 +57,13 @@
               required
             ></textarea>
           </div>
-          <button type="submit" class="pixel-btn" :disabled="sent">
-            {{ sent ? '✓ enviado!' : '> enviar mensagem' }}
+          <button type="submit" class="pixel-btn" :disabled="sending || sent">
+            <span v-if="sending">// enviando...</span>
+            <span v-else-if="sent">✓ enviado!</span>
+            <span v-else>> enviar mensagem</span>
           </button>
-          <p v-if="sent" class="success-msg">
-            Mensagem recebida! Falarei em breve.
-          </p>
+          <p v-if="sent" class="success-msg">Mensagem recebida! Falarei em breve.</p>
+          <p v-if="error" class="error-msg">Erro ao enviar. Tente novamente ou manda direto pro email.</p>
         </form>
       </div>
     </div>
@@ -85,20 +86,47 @@
 <script setup>
 import { ref, reactive } from 'vue';
 
+const WEB3FORMS_KEY = import.meta.env.PUBLIC_WEB3FORMS_KEY;
+
+const sending = ref(false);
 const sent = ref(false);
+const error = ref(false);
 const form = reactive({ name: '', email: '', message: '' });
 
 const links = [
-  { icon: '📧', label: 'Email', value: 'csousa.profissional@gmail.com.br', href: 'mailto:caio.sousa@geopixel.com.br' },
+  { icon: '📧', label: 'Email', value: 'csousa.profissional@gmail.com', href: 'mailto:cmsousa.profissional@gmail.com' },
   { icon: '🐙', label: 'GitHub', value: 'github.com/CSous-a', href: 'https://github.com/CSous-a' },
   { icon: '💼', label: 'LinkedIn', value: '/in/caio-sousa', href: 'https://linkedin.com/in/caio--sousa' },
 ];
 
-function send() {
-  // substituir por integração real (Formspree, EmailJS, etc.)
-  sent.value = true;
-  Object.assign(form, { name: '', email: '', message: '' });
-  setTimeout(() => { sent.value = false; }, 5000);
+async function send() {
+  sending.value = true;
+  error.value = false;
+  try {
+    const res = await fetch('https://api.web3forms.com/submit', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        access_key: WEB3FORMS_KEY,
+        subject: `[Portfólio] Mensagem de ${form.name}`,
+        name: form.name,
+        email: form.email,
+        message: form.message,
+      }),
+    });
+    const data = await res.json();
+    if (data.success) {
+      sent.value = true;
+      Object.assign(form, { name: '', email: '', message: '' });
+      setTimeout(() => { sent.value = false; }, 5000);
+    } else {
+      error.value = true;
+    }
+  } catch {
+    error.value = true;
+  } finally {
+    sending.value = false;
+  }
 }
 </script>
 
@@ -222,6 +250,12 @@ function send() {
   font-family: 'VT323', monospace;
   font-size: 18px;
   color: var(--green);
+}
+
+.error-msg {
+  font-family: 'VT323', monospace;
+  font-size: 18px;
+  color: #ff4444;
 }
 
 /* Footer */
