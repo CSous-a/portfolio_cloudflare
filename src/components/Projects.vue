@@ -11,28 +11,30 @@
           @click="activeTag = tag"
         >{{ tag }}</button>
       </div>
-      <div class="projects-grid">
-        <div
-          class="project-card"
-          v-for="project in filtered"
-          :key="project.title"
-          :class="{ featured: project.featured }"
-        >
-          <div class="card-header">
-            <div class="card-status">
-              <span class="status-dot"></span>
-              <span class="status-text">{{ project.status }}</span>
+      <div class="projects-scroll">
+        <div class="projects-grid">
+          <div
+            class="project-card"
+            v-for="project in filtered"
+            :key="project.title"
+            :class="{ featured: project.featured }"
+          >
+            <div class="card-header">
+              <div class="card-status">
+                <span class="status-dot"></span>
+                <span class="status-text">{{ project.status }}</span>
+              </div>
+              <div class="card-links">
+                <a v-if="project.demo" :href="project.demo" target="_blank" class="card-link">demo</a>
+                <a v-if="project.repo" :href="project.repo" target="_blank" class="card-link">code</a>
+              </div>
             </div>
-            <div class="card-links">
-              <a v-if="project.demo" :href="project.demo" target="_blank" class="card-link">demo</a>
-              <a v-if="project.repo" :href="project.repo" target="_blank" class="card-link">code</a>
+            <div class="card-icon">{{ project.icon }}</div>
+            <h3 class="card-title">{{ project.title }}</h3>
+            <p class="card-desc">{{ project.desc }}</p>
+            <div class="card-tags">
+              <span class="badge" v-for="t in project.tags" :key="t">{{ t }}</span>
             </div>
-          </div>
-          <div class="card-icon">{{ project.icon }}</div>
-          <h3 class="card-title">{{ project.title }}</h3>
-          <p class="card-desc">{{ project.desc }}</p>
-          <div class="card-tags">
-            <span class="badge" v-for="t in project.tags" :key="t">{{ t }}</span>
           </div>
         </div>
       </div>
@@ -46,64 +48,64 @@ import { ref, computed } from 'vue';
 const projects = [
   {
     icon: '🗺️',
-    title: 'GeoPixel Dashboard',
-    desc: 'Plataforma de visualização de dados geoespaciais com mapas interativos e análises em tempo real.',
-    tags: ['Vue.js', 'PostGIS', 'Mapbox', 'Node.js'],
-    status: 'live',
-    featured: true,
-    demo: '#',
-    repo: '#',
-  },
-  {
-    icon: '🛒',
-    title: 'E-Commerce API',
-    desc: 'API REST completa para e-commerce com autenticação JWT, pagamentos e gestão de estoque.',
-    tags: ['Node.js', 'PostgreSQL', 'Docker'],
-    status: 'live',
+    title: 'GeoTrack',
+    desc: 'API Rest de visualização de dados geoespaciais com mapas interativos e análises de rotas. Feito em parceria com a empresa ITO1',
+    tags: ['Vue.js', 'PostGIS', 'Springboot', 'Java','Oracle','PostgreSQL'],
+    status: 'offline',
     featured: true,
     demo: null,
-    repo: '#',
-  },
-  {
-    icon: '🤖',
-    title: 'Chat Bot CLI',
-    desc: 'Bot de linha de comando integrando Claude API para automação de tarefas repetitivas.',
-    tags: ['Python', 'Claude API', 'CLI'],
-    status: 'dev',
-    featured: false,
-    demo: null,
-    repo: '#',
+    repo: 'https://github.com/CSous-a/GeoTrack-4Sem2024Main',
   },
   {
     icon: '📊',
-    title: 'Analytics SaaS',
-    desc: 'Dashboard de métricas em tempo real para pequenas empresas, com relatórios customizáveis.',
-    tags: ['Astro', 'Vue.js', 'Supabase'],
-    status: 'live',
-    featured: false,
-    demo: '#',
-    repo: null,
-  },
-  {
-    icon: '🎮',
-    title: 'Pixel Runner',
-    desc: 'Jogo de plataforma 2D feito com canvas puro — sem engines, só criatividade.',
-    tags: ['JavaScript', 'Canvas', 'Game'],
-    status: 'live',
-    featured: false,
-    demo: '#',
-    repo: '#',
-  },
-  {
-    icon: '📦',
-    title: 'Deploy CLI',
-    desc: 'Ferramenta CLI para automatizar deploys em VPS com rollback e health-checks.',
-    tags: ['Node.js', 'Docker', 'Bash'],
-    status: 'dev',
-    featured: false,
+    title: 'BI Taiga',
+    desc: 'Plataforma de Business Intelligence integrada ao Taiga para monitoramento de métricas, desempenho de equipes e acompanhamento estratégico de projetos por meio de dashboards interativos.',
+    tags: ['Vue.js','Vuetify', 'PostgreSQL','Java','SonarCloud','Docker','Springboot','Junit','DataWarehouse'],
+    status: 'offline',
+    featured: true,
     demo: null,
-    repo: '#',
+    repo: 'https://github.com/QuantumBitBR/API_5SEM',
   },
+  {
+  icon: '⏪',
+  title: 'Agile Assessment',
+  desc: 'Plataforma de avaliação 360° baseada na Escala Likert para acompanhamento de desempenho, feedbacks internos e evolução de equipes Scrum.',
+  tags: ['Python', 'Flask', 'TinyDB', 'HTML', 'CSS'],
+  status: 'offline',
+  featured: false,
+  demo: null,
+  repo: 'https://github.com/CSous-a/AgileAssessment'
+},
+{
+  icon: '🔄',
+  title: 'DataFlow',
+  desc: 'Plataforma de configuração e gerenciamento de pipelines de dados, permitindo mapeamento de metadados, regras de negócio e análise operacional.',
+  tags: ['Java', 'SpringBoot', 'Vue.js', 'JavaScript', 'MySQL', 'HTML', 'CSS'],
+  status: 'offline',
+  featured: true,
+  demo: null,
+  repo: 'https://github.com/CSous-a/DataFlow-3Sem2024'
+},
+  {
+    icon: '📝',
+    title: 'GeoDoc',
+    desc: 'Plataforma de gestão e controle documental para centralização, organização e acompanhamento de documentos digitais em ambiente corporativo.',
+    tags: ['Next.js','Docker', 'PostgreSQL','DataWarehouse','SonarCloud','Docker','Springboot','Cloud','MDX','typescript'],
+    status: 'offline',
+    featured: true,
+    demo: null,
+    repo: 'https://github.com/CSous-a/supdoc',
+  },
+  {
+  icon: '🧠',
+  title: 'VisionData',
+  desc: 'Plataforma de Business Intelligence para consolidação de tickets de suporte, busca inteligente de soluções recorrentes e geração de insights estratégicos e preditivos.',
+  tags: ['Go', 'Nuxt.js', 'Python', 'Elasticsearch', 'MLFlow', 'SQL Server', 'Docker'],
+  status: 'offline',
+  featured: true,
+  demo: '#',
+  repo: 'https://github.com/iNineBD/VisionData-6Sem2025Main',
+},
 ];
 
 const allTags = ['todos', ...new Set(projects.flatMap(p => p.tags))];
@@ -140,6 +142,30 @@ const filtered = computed(() =>
   border-color: var(--green);
   color: var(--green);
   background: rgba(0,255,65,0.05);
+}
+
+.projects-scroll {
+  max-height: 344px;
+  overflow-y: auto;
+  overflow-x: hidden;
+  padding-right: 6px;
+  padding-top: 4px;
+  scrollbar-width: thin;
+  scrollbar-color: var(--green) var(--bg);
+}
+
+.projects-scroll::-webkit-scrollbar {
+  width: 4px;
+}
+
+.projects-scroll::-webkit-scrollbar-track {
+  background: var(--bg);
+  border: 1px solid var(--border);
+}
+
+.projects-scroll::-webkit-scrollbar-thumb {
+  background: var(--green);
+  box-shadow: 0 0 6px var(--green);
 }
 
 .projects-grid {
@@ -269,11 +295,17 @@ const filtered = computed(() =>
   .projects-grid {
     grid-template-columns: repeat(2, 1fr);
   }
+  .projects-scroll {
+    max-height: 688px;
+  }
 }
 
 @media (max-width: 580px) {
   .projects-grid {
     grid-template-columns: 1fr;
+  }
+  .projects-scroll {
+    max-height: 344px;
   }
 }
 </style>
