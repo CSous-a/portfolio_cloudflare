@@ -43,14 +43,17 @@ const lines = [
   { comment: true, text: '// quem sou eu' },
   { key: 'nome', val: '"Caio Sousa"' },
   { key: 'localização', val: '"Brasil 🇧🇷"' },
-  { key: 'role', val: '"Full-Stack Developer"' },
+  { key: 'role', val: '"Jr Developer"' },
   { text: '' },
   { comment: true, text: '// o que faço' },
-  { key: 'foco', val: '["Web Apps", "APIs", "GeoData"]', type: 'array' },
+  { key: 'foco', val: '["Web Apps", "APIs", "GeoData","Database","DevOps"]', type: 'array' },
   { key: 'disponível', val: 'true', type: 'bool' },
   { text: '' },
+  { comment: true, text: '// Linguas' },
+  { key: 'hobbies', val: '["Inglês - B2", "Português - Nativo"]', type: 'array' },
+  { text: '' },
   { comment: true, text: '// fora do teclado' },
-  { key: 'hobbies', val: '["pixel art", "café", "games"]', type: 'array' },
+  { key: 'hobbies', val: '["trilhas", "café", "games", "motos"]', type: 'array' },
 ];
 
 const cards = [
@@ -72,7 +75,12 @@ const cards = [
   {
     icon: '🌍',
     title: 'Geodados',
-    desc: 'Especialidade em dados geoespaciais e visualização de mapas.',
+    desc: 'Especialidade em serviços geoespaciais e visualização de mapas.',
+  },
+  {
+    icon: '🎲',
+    title: 'Banco de dados',
+    desc: 'Formação em bancos de dados escalonáveis e ágeis.',
   },
 ];
 </script>
