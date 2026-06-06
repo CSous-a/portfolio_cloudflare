@@ -27,6 +27,7 @@
             v-for="project in filtered"
             :key="project.title"
             :class="{ featured: project.featured }"
+            @click="selectedProject = project"
           >
             <div class="card-header">
               <div class="card-status">
@@ -46,72 +47,117 @@
       </div>
     </div>
   </section>
+
+  <ProjectModal
+    v-if="selectedProject"
+    :project="selectedProject"
+    @close="selectedProject = null"
+  />
 </template>
 
 <script setup>
 import { ref, computed, onMounted, nextTick } from 'vue';
+import ProjectModal from './popup_projects/ProjectModal.vue';
 
 const projects = [
   {
+    id: 'geotrack',
     icon: '🗺️',
     title: 'GeoTrack',
     desc: 'API Rest de visualização de dados geoespaciais com mapas interativos e análises de rotas. Feito em parceria com a empresa ITO1',
-    tags: ['Vue.js', 'PostGIS', 'Springboot', 'Java','Oracle','PostgreSQL'],
+    tags: ['Vue.js', 'PostGIS', 'Springboot', 'Java', 'Oracle', 'PostgreSQL'],
     status: 'offline',
     featured: true,
     demo: null,
     repo: 'https://github.com/CSous-a/GeoTrack-4Sem2024Main',
+    slides: [
+      { image: null, title: 'Visão Geral', desc: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua ut enim ad minim veniam.' },
+      { image: null, title: 'Mapa Interativo', desc: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Plotagem de rotas em tempo real com suporte a zoom, arrastar e filtros por período.' },
+      { image: null, title: 'Autenticação', desc: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sistema de login com controle de acesso baseado em credenciais seguras.' },
+    ],
   },
   {
+    id: 'bitaiga',
     icon: '📊',
     title: 'BI Taiga',
     desc: 'Plataforma de Business Intelligence integrada ao Taiga para monitoramento de métricas, desempenho de equipes e acompanhamento estratégico de projetos por meio de dashboards interativos.',
-    tags: ['Vue.js','Vuetify', 'PostgreSQL','Java','SonarCloud','Docker','SpringBoot','Junit','DataWarehouse'],
+    tags: ['Vue.js', 'Vuetify', 'PostgreSQL', 'Java', 'SonarCloud', 'Docker', 'SpringBoot', 'Junit', 'DataWarehouse'],
     status: 'offline',
     featured: true,
     demo: null,
     repo: 'https://github.com/QuantumBitBR/API_5SEM',
+    slides: [
+      { image: null, title: 'Dashboard Principal', desc: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Visão consolidada de métricas de cards, distribuição de tarefas e status por colaborador.' },
+      { image: null, title: 'Gestão de Equipes', desc: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Acompanhamento de desempenho individual com cálculo de tempo médio de execução.' },
+      { image: null, title: 'Controle de Acesso', desc: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Três níveis de perfil — Operador, Gerente e Administrador — com permissões distintas.' },
+      { image: null, title: 'Exportação de Dados', desc: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Geração de relatórios em CSV com filtros por período e nível de acesso.' },
+    ],
   },
   {
-  icon: '⏪',
-  title: 'Agile Assessment',
-  desc: 'Plataforma de avaliação 360° baseada na Escala Likert para acompanhamento de desempenho, feedbacks internos e evolução de equipes Scrum.',
-  tags: ['Python', 'Flask', 'TinyDB', 'HTML', 'CSS'],
-  status: 'offline',
-  featured: false,
-  demo: null,
-  repo: 'https://github.com/CSous-a/AgileAssessment'
-},
-{
-  icon: '🔄',
-  title: 'DataFlow',
-  desc: 'Plataforma de configuração e gerenciamento de pipelines de dados, permitindo mapeamento de metadados, regras de negócio e análise operacional.',
-  tags: ['Java', 'SpringBoot', 'Vue.js', 'JavaScript', 'MySQL', 'HTML', 'CSS'],
-  status: 'offline',
-  featured: true,
-  demo: null,
-  repo: 'https://github.com/CSous-a/DataFlow-3Sem2024'
-},
+    id: 'agileassessment',
+    icon: '⏪',
+    title: 'Agile Assessment',
+    desc: 'Plataforma de avaliação 360° baseada na Escala Likert para acompanhamento de desempenho, feedbacks internos e evolução de equipes Scrum.',
+    tags: ['Python', 'Flask', 'TinyDB', 'HTML', 'CSS'],
+    status: 'offline',
+    featured: false,
+    demo: null,
+    repo: 'https://github.com/CSous-a/AgileAssessment',
+    slides: [
+      { image: null, title: 'Formulário de Avaliação', desc: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Avaliação estruturada com critérios baseados na Escala Likert por sprint.' },
+      { image: null, title: 'Resultados Individuais', desc: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Histórico de evolução individual com gráficos comparativos entre sprints.' },
+      { image: null, title: 'Feedback Anônimo', desc: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mecanismo de feedback anônimo entre membros para redução de viés nas avaliações.' },
+    ],
+  },
   {
+    id: 'dataflow',
+    icon: '🔄',
+    title: 'DataFlow',
+    desc: 'Plataforma de configuração e gerenciamento de pipelines de dados, permitindo mapeamento de metadados, regras de negócio e análise operacional.',
+    tags: ['Java', 'SpringBoot', 'Vue.js', 'JavaScript', 'MySQL', 'HTML', 'CSS'],
+    status: 'offline',
+    featured: true,
+    demo: null,
+    repo: 'https://github.com/CSous-a/DataFlow-3Sem2024',
+    slides: [
+      { image: null, title: 'Upload de Arquivos', desc: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Interface de upload para CSV e Excel com apresentação automática da estrutura de dados detectada.' },
+      { image: null, title: 'Mapeamento de Campos', desc: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Configuração visual de regras "de/para" para mapeamento de campos entre fonte e destino.' },
+      { image: null, title: 'Dashboard Analítico', desc: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Visualizações quantitativas das configurações de pipeline com exportação em YAML.' },
+    ],
+  },
+  {
+    id: 'geodoc',
     icon: '📝',
     title: 'GeoDoc',
     desc: 'Plataforma de gestão e controle documental para centralização, organização e acompanhamento de documentos digitais em ambiente corporativo.',
-    tags: ['Next.js','Docker', 'PostgreSQL','DataWarehouse','SonarCloud','Docker','Springboot','Claude MCP','MDX','typescript'],
+    tags: ['Next.js', 'Docker', 'PostgreSQL', 'DataWarehouse', 'SonarCloud', 'Springboot', 'Claude MCP', 'MDX', 'typescript'],
     status: 'offline',
     featured: true,
     demo: null,
     repo: 'https://github.com/CSous-a/supdoc',
+    slides: [
+      { image: null, title: 'Repositório de Documentos', desc: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Centralização de documentos corporativos com busca por metadados e categorias.' },
+      { image: null, title: 'Fluxo de Aprovação', desc: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pipeline de revisão e aprovação com rastreabilidade de alterações e notificações automáticas.' },
+      { image: null, title: 'Histórico de Versões', desc: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Versionamento completo com diff entre versões e restauração de revisões anteriores.' },
+    ],
   },
   {
-  icon: '🧠',
-  title: 'VisionData',
-  desc: 'Plataforma de Business Intelligence para consolidação de tickets de suporte, busca inteligente de soluções recorrentes e geração de insights estratégicos e preditivos.',
-  tags: ['Go', 'Nuxt.js', 'Python', 'Elasticsearch', 'MLFlow', 'SQL Server', 'Docker'],
-  status: 'offline',
-  featured: true,
-  demo: '#',
-  repo: 'https://github.com/iNineBD/VisionData-6Sem2025Main',
-},
+    id: 'visiondata',
+    icon: '🧠',
+    title: 'VisionData',
+    desc: 'Plataforma de Business Intelligence para consolidação de tickets de suporte, busca inteligente de soluções recorrentes e geração de insights estratégicos e preditivos.',
+    tags: ['Go', 'Nuxt.js', 'Python', 'Elasticsearch', 'MLFlow', 'SQL Server', 'Docker'],
+    status: 'offline',
+    featured: true,
+    demo: null,
+    repo: 'https://github.com/iNineBD/VisionData-6Sem2025Main',
+    slides: [
+      { image: null, title: 'Busca Inteligente', desc: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Busca por palavras-chave em base de conhecimento estruturada com Elasticsearch.' },
+      { image: null, title: 'Insights por IA', desc: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Geração de insights preditivos com MLFlow para identificação de padrões recorrentes em tickets.' },
+      { image: null, title: 'Dashboard de Métricas', desc: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Visualizações de volume de tickets, tendências e previsões com conformidade LGPD.' },
+      { image: null, title: 'Controle de Acesso (RBAC)', desc: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Gestão de permissões por papéis com logs de auditoria e anonimização de dados pessoais.' },
+    ],
+  },
 ];
 
 const categoryMap = {
@@ -144,6 +190,7 @@ const filtered = computed(() => {
   return projects.filter(p => p.tags.some(t => techs.includes(t)));
 });
 
+const selectedProject = ref(null);
 const scrollEl = ref(null);
 
 onMounted(async () => {
@@ -200,6 +247,7 @@ onMounted(async () => {
   overflow-x: hidden;
   padding-right: 6px;
   padding-top: 1px;
+  height: 70vh;
   scrollbar-width: thin;
   scrollbar-color: var(--green) var(--bg);
 }
@@ -234,6 +282,7 @@ onMounted(async () => {
   transition: border-color 0.2s, transform 0.2s;
   position: relative;
   overflow: hidden;
+  cursor: pointer;
 }
 
 .project-card::before {
