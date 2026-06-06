@@ -20,7 +20,7 @@
           @click="activeTech = activeTech === tech ? null : tech"
         >{{ tech }}</button>
       </div>
-      <div class="projects-scroll">
+      <div class="projects-scroll" ref="scrollEl">
         <div class="projects-grid">
           <div
             class="project-card"
@@ -49,7 +49,7 @@
 </template>
 
 <script setup>
-import { ref, computed } from 'vue';
+import { ref, computed, onMounted, nextTick } from 'vue';
 
 const projects = [
   {
@@ -143,6 +143,16 @@ const filtered = computed(() => {
   if (activeTech.value) return projects.filter(p => p.tags.includes(activeTech.value));
   return projects.filter(p => p.tags.some(t => techs.includes(t)));
 });
+
+const scrollEl = ref(null);
+
+onMounted(async () => {
+  await nextTick();
+  const firstCard = scrollEl.value?.querySelector('.project-card');
+  if (firstCard && scrollEl.value) {
+    scrollEl.value.style.maxHeight = firstCard.offsetHeight + 'px';
+  }
+});
 </script>
 
 <style scoped>
@@ -186,11 +196,10 @@ const filtered = computed(() => {
 }
 
 .projects-scroll {
-  max-height: 344px;
   overflow-y: auto;
   overflow-x: hidden;
   padding-right: 6px;
-  padding-top: 4px;
+  padding-top: 1px;
   scrollbar-width: thin;
   scrollbar-color: var(--green) var(--bg);
 }
