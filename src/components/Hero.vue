@@ -50,12 +50,12 @@ import { ref, onMounted } from 'vue';
 
 const roles = [
   'Apaixonado por Java',
-  'Fã de Vue.js',
+  'Arquiteto de APIs REST',
   'Solucionador de Problemas',
   'Adepto de SpringBoot',
   'Amigo do Ágil',
   'Aprendizado Contínuo',
-  'Trabalho em Equipe',
+  'Especialista em Banco de Dados',
   'Entusiasta de Rust',
 ];
 

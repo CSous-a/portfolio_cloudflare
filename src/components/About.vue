@@ -46,7 +46,7 @@ const lines = [
   { key: 'Cargo', val: '"Software Developer"' },
   { text: '' },
   { comment: true, text: '// o que faço' },
-  { key: 'Foco', val: '["Web Apps", "APIs", "GeoData","Database","DevOps"]', type: 'array' },
+  { key: 'Foco', val: '["APIs REST", "Microsserviços", "GeoData", "Banco de Dados", "DevOps"]', type: 'array' },
   { key: 'disponível', val: 'true', type: 'bool' },
   { text: '' },
   { comment: true, text: '// idiomas' },
@@ -63,9 +63,9 @@ const cards = [
     desc: 'Código limpo e rápido, sem gordura. Cada byte importa.',
   },
   {
-    icon: '🎨',
-    title: 'Design',
-    desc: 'Interface que comunica, não apenas existe.',
+    icon: '🔌',
+    title: 'APIs',
+    desc: 'Endpoints bem definidos, contratos claros e integrações que escalam.',
   },
   {
     icon: '🔧',

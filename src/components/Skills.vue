@@ -13,7 +13,7 @@
             <div class="skill-item" v-for="skill in group.skills" :key="skill.name">
               <div class="skill-header">
                 <span class="skill-name">{{ skill.name }}</span>
-                <span class="skill-level">{{ skill.level }}%</span>
+                <span class="skill-level">{{ levelLabel(skill.level) }}</span>
               </div>
               <div class="skill-bar">
                 <div class="skill-fill" :style="{ width: skill.level + '%' }"
@@ -28,45 +28,54 @@
 </template>
 
 <script setup>
+function levelLabel(level) {
+  if (level <= 30) return 'Iniciante';
+  if (level <= 50) return 'Aprendiz';
+  if (level <= 65) return 'Intermediário';
+  if (level <= 80) return 'Avançado';
+  if (level <= 95) return 'Experiente';
+  return 'Especialista';
+}
+
 const groups = [
-  {
-    name: 'Frontend',
-    color: 'green',
-    skills: [
-      { name: 'Vue.js', level: 70 },
-      { name: 'React', level: 50 },
-      { name: 'TypeScript', level: 60 },
-      { name: 'CSS / Tailwind', level: 65 },
-    ],
-  },
   {
     name: 'Backend',
     color: 'cyan',
     skills: [
       { name: 'Java', level: 75 },
+      { name: 'SpringBoot', level: 75 },
       { name: 'Python', level: 55 },
       { name: 'Rust', level: 40 },
-      { name: 'SpringBoot', level: 75 },
     ],
   },
   {
     name: 'Data & Geo',
     color: 'purple',
     skills: [
-      { name: 'PostGIS', level: 75 },
       { name: 'Postgres', level: 95 },
-      { name: 'MongoDB', level: 60 },
+      { name: 'PostGIS', level: 75 },
       { name: 'MySQL', level: 75 },
+      { name: 'MongoDB', level: 60 },
     ],
   },
   {
     name: 'DevOps',
     color: 'yellow',
     skills: [
-      { name: 'Docker', level: 70 },
       { name: 'Git', level: 90 },
       { name: 'Linux Server', level: 80 },
+      { name: 'Docker', level: 70 },
       { name: 'Cloudflare', level: 56 },
+    ],
+  },
+  {
+    name: 'Frontend',
+    color: 'green',
+    skills: [
+      { name: 'Vue.js', level: 70 },
+      { name: 'TypeScript', level: 60 },
+      { name: 'CSS / Tailwind', level: 65 },
+      { name: 'React', level: 50 },
     ],
   },
 ];
