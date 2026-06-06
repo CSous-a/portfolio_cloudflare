@@ -39,7 +39,7 @@
       </div>
     </div>
     <div class="scroll-hint">
-      <span>scroll</span>
+      <span>rolar</span>
       <span class="arrow">▼</span>
     </div>
   </section>
@@ -49,14 +49,14 @@
 import { ref, onMounted } from 'vue';
 
 const roles = [
-  'Java Lover',
-  'Vue.js Fan',
-  'Problem Solver',
-  'Springboot adept',
-  'Agile best friend',
-  'Continuous Learner',
-  'Team Player',
-  'Rust enthusiast',
+  'Apaixonado por Java',
+  'Arquiteto de APIs REST',
+  'Solucionador de Problemas',
+  'Adepto de SpringBoot',
+  'Amigo do Ágil',
+  'Aprendizado Contínuo',
+  'Especialista em Banco de Dados',
+  'Entusiasta de Rust',
 ];
 
 const stats = [

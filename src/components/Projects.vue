@@ -1,15 +1,24 @@
 <template>
   <section id="projects" class="section">
     <div class="container">
-      <h2 class="section-title">projects</h2>
+      <h2 class="section-title">projetos</h2>
       <div class="filter-bar">
         <button
-          v-for="tag in allTags"
-          :key="tag"
+          v-for="cat in categoryList"
+          :key="cat"
           class="filter-btn"
-          :class="{ active: activeTag === tag }"
-          @click="activeTag = tag"
-        >{{ tag }}</button>
+          :class="{ active: activeCategory === cat }"
+          @click="selectCategory(cat)"
+        >{{ cat }}</button>
+      </div>
+      <div class="filter-bar tech-bar" v-if="activeCategory !== 'todos'">
+        <button
+          v-for="tech in availableTechs"
+          :key="tech"
+          class="filter-btn tech-btn"
+          :class="{ active: activeTech === tech }"
+          @click="activeTech = activeTech === tech ? null : tech"
+        >{{ tech }}</button>
       </div>
       <div class="projects-scroll">
         <div class="projects-grid">
@@ -21,20 +30,17 @@
           >
             <div class="card-header">
               <div class="card-status">
-                <span class="status-dot"></span>
-                <span class="status-text">{{ project.status }}</span>
+                <span class="status-dot" :class="project.status"></span>
+                <span class="status-text" :class="project.status">{{ project.status }}</span>
               </div>
               <div class="card-links">
                 <a v-if="project.demo" :href="project.demo" target="_blank" rel="noopener noreferrer" class="card-link">demo</a>
-                <a v-if="project.repo" :href="project.repo" target="_blank" rel="noopener noreferrer" class="card-link">code</a>
+                <a v-if="project.repo" :href="project.repo" target="_blank" rel="noopener noreferrer" class="card-link">código</a>
               </div>
             </div>
             <div class="card-icon">{{ project.icon }}</div>
             <h3 class="card-title">{{ project.title }}</h3>
             <p class="card-desc">{{ project.desc }}</p>
-            <div class="card-tags">
-              <span class="badge" v-for="t in project.tags" :key="t">{{ t }}</span>
-            </div>
           </div>
         </div>
       </div>
@@ -60,7 +66,7 @@ const projects = [
     icon: '📊',
     title: 'BI Taiga',
     desc: 'Plataforma de Business Intelligence integrada ao Taiga para monitoramento de métricas, desempenho de equipes e acompanhamento estratégico de projetos por meio de dashboards interativos.',
-    tags: ['Vue.js','Vuetify', 'PostgreSQL','Java','SonarCloud','Docker','Springboot','Junit','DataWarehouse'],
+    tags: ['Vue.js','Vuetify', 'PostgreSQL','Java','SonarCloud','Docker','SpringBoot','Junit','DataWarehouse'],
     status: 'offline',
     featured: true,
     demo: null,
@@ -90,7 +96,7 @@ const projects = [
     icon: '📝',
     title: 'GeoDoc',
     desc: 'Plataforma de gestão e controle documental para centralização, organização e acompanhamento de documentos digitais em ambiente corporativo.',
-    tags: ['Next.js','Docker', 'PostgreSQL','DataWarehouse','SonarCloud','Docker','Springboot','Cloud','MDX','typescript'],
+    tags: ['Next.js','Docker', 'PostgreSQL','DataWarehouse','SonarCloud','Docker','Springboot','Claude MCP','MDX','typescript'],
     status: 'offline',
     featured: true,
     demo: null,
@@ -108,14 +114,35 @@ const projects = [
 },
 ];
 
-const allTags = ['todos', ...new Set(projects.flatMap(p => p.tags))];
-const activeTag = ref('todos');
+const categoryMap = {
+  Backend:  ['Java', 'SpringBoot', 'Python', 'Rust', 'Go', 'Flask', 'Junit'],
+  DevOps:   ['Docker', 'SonarCloud', 'Claude MCP' , 'Linux Server'],
+  Database: ['PostgreSQL', 'PostGIS', 'MongoDB', 'MySQL', 'Oracle', 'TinyDB', 'Elasticsearch', 'SQL Server', 'DataWarehouse', 'MLFlow'],
+  Frontend: ['Vue.js', 'Vuetify', 'React', 'Next.js', 'Nuxt.js', 'TypeScript', 'JavaScript', 'HTML', 'CSS', 'MDX', 'typescript'],
+};
 
-const filtered = computed(() =>
-  activeTag.value === 'todos'
-    ? projects
-    : projects.filter(p => p.tags.includes(activeTag.value))
-);
+const categoryList = ['todos', ...Object.keys(categoryMap)];
+const activeCategory = ref('todos');
+const activeTech = ref(null);
+
+function selectCategory(cat) {
+  activeCategory.value = cat;
+  activeTech.value = null;
+}
+
+const availableTechs = computed(() => {
+  if (activeCategory.value === 'todos') return [];
+  return categoryMap[activeCategory.value].filter(tech =>
+    projects.some(p => p.tags.includes(tech))
+  );
+});
+
+const filtered = computed(() => {
+  if (activeCategory.value === 'todos') return projects;
+  const techs = categoryMap[activeCategory.value];
+  if (activeTech.value) return projects.filter(p => p.tags.includes(activeTech.value));
+  return projects.filter(p => p.tags.some(t => techs.includes(t)));
+});
 </script>
 
 <style scoped>
@@ -123,7 +150,21 @@ const filtered = computed(() =>
   display: flex;
   flex-wrap: wrap;
   gap: 8px;
-  margin-bottom: 32px;
+  margin-bottom: 12px;
+}
+
+.tech-bar {
+  margin-bottom: 24px;
+  padding: 10px 12px;
+  border: 1px solid var(--border);
+  border-left: 2px solid var(--green);
+  background: rgba(0,255,65,0.02);
+}
+
+.tech-btn {
+  font-size: 14px;
+  padding: 2px 10px;
+  opacity: 0.8;
 }
 
 .filter-btn {
@@ -224,9 +265,11 @@ const filtered = computed(() =>
 .status-dot {
   width: 8px; height: 8px;
   border-radius: 50%;
-  background: var(--green);
   animation: pulse 2s ease-in-out infinite;
 }
+
+.status-dot.online  { background: var(--green); box-shadow: 0 0 6px var(--green); }
+.status-dot.offline { background: #ff5f57;      box-shadow: 0 0 6px #ff5f57; }
 
 @keyframes pulse {
   0%, 100% { opacity: 1; }
@@ -236,8 +279,10 @@ const filtered = computed(() =>
 .status-text {
   font-family: 'VT323', monospace;
   font-size: 14px;
-  color: var(--text-dim);
 }
+
+.status-text.online  { color: var(--green); }
+.status-text.offline { color: #ff5f57; }
 
 .card-links {
   display: flex;

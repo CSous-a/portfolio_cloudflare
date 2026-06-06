@@ -8,13 +8,13 @@ import Projects from '../components/Projects.vue';
 import Contact from '../components/Contact.vue';
 ---
 
-<Layout title="Caio Sousa — Dev Portfolio">
+<Layout title="Caio Sousa — Portfólio">
   <Navbar client:load />
-  <main>
+  <main id="fullpage">
     <Hero client:load />
-    <About client:visible />
-    <Skills client:visible />
-    <Projects client:visible />
-    <Contact client:visible />
+    <About client:load />
+    <Skills client:load />
+    <Projects client:load />
+    <Contact client:load />
   </main>
 </Layout>
