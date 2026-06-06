@@ -21,8 +21,8 @@
           >
             <div class="card-header">
               <div class="card-status">
-                <span class="status-dot"></span>
-                <span class="status-text">{{ project.status }}</span>
+                <span class="status-dot" :class="project.status"></span>
+                <span class="status-text" :class="project.status">{{ project.status }}</span>
               </div>
               <div class="card-links">
                 <a v-if="project.demo" :href="project.demo" target="_blank" rel="noopener noreferrer" class="card-link">demo</a>
@@ -32,9 +32,6 @@
             <div class="card-icon">{{ project.icon }}</div>
             <h3 class="card-title">{{ project.title }}</h3>
             <p class="card-desc">{{ project.desc }}</p>
-            <div class="card-tags">
-              <span class="badge" v-for="t in project.tags" :key="t">{{ t }}</span>
-            </div>
           </div>
         </div>
       </div>
@@ -224,9 +221,11 @@ const filtered = computed(() =>
 .status-dot {
   width: 8px; height: 8px;
   border-radius: 50%;
-  background: var(--green);
   animation: pulse 2s ease-in-out infinite;
 }
+
+.status-dot.online  { background: var(--green); box-shadow: 0 0 6px var(--green); }
+.status-dot.offline { background: #ff5f57;      box-shadow: 0 0 6px #ff5f57; }
 
 @keyframes pulse {
   0%, 100% { opacity: 1; }
@@ -236,8 +235,10 @@ const filtered = computed(() =>
 .status-text {
   font-family: 'VT323', monospace;
   font-size: 14px;
-  color: var(--text-dim);
 }
+
+.status-text.online  { color: var(--green); }
+.status-text.offline { color: #ff5f57; }
 
 .card-links {
   display: flex;
