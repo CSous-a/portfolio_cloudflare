@@ -17,14 +17,30 @@
                 class="carousel-slide"
                 v-show="currentSlide === i"
               >
+                <video
+                  v-if="slide.video"
+                  :src="slide.video"
+                  :ref="el => { if (el) videoRefs[i] = el }"
+                  :style="{ objectFit: slide.fit ?? 'cover' }"
+                  muted
+                  loop
+                  playsinline
+                  autoplay
+                  controls
+                />
                 <img
-                  v-if="slide.image"
+                  v-else-if="slide.image"
                   :src="slide.image"
                   :alt="`${project.title} - ${slide.title}`"
+                  :style="{
+                    objectFit: slide.fit ?? 'cover',
+                    background: slide.bg ?? 'transparent',
+                    padding: slide.fit === 'contain' ? '16px' : '0'
+                  }"
                 />
                 <div v-else class="placeholder">
                   <span class="placeholder-icon">{{ project.icon }}</span>
-                  <span class="placeholder-label">// {{ slide.title.toLowerCase().replace(/ /g, '_') }}.png</span>
+                  <span class="placeholder-label">// {{ slide.title ? slide.title.toLowerCase().replace(/ /g, '_') : 'preview' }}.png</span>
                 </div>
               </div>
             </div>
@@ -97,7 +113,7 @@
 </template>
 
 <script setup>
-import { ref, computed, watch, defineAsyncComponent, onMounted, onUnmounted } from 'vue';
+import { ref, computed, watch, reactive, defineAsyncComponent, onMounted, onUnmounted } from 'vue';
 
 const props = defineProps({ project: Object });
 const emit = defineEmits(['close']);

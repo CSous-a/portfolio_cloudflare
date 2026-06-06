@@ -1,6 +1,7 @@
 <script setup>
 const slides = [
-  { image: null, title: 'Busca Inteligente', desc: 'Busca por palavras-chave em base de conhecimento estruturada com Elasticsearch para localizar soluções de tickets anteriores.' },
+  { image: '/visionDataLogo.png', fit: 'contain', title: null, desc: null },
+  { image: '/visionDataSearch.png', fit:'contain', title: 'Busca Inteligente', desc: 'Busca por palavras-chave em base de conhecimento estruturada com Elasticsearch para localizar soluções de tickets anteriores.' },
   { image: null, title: 'Insights por IA', desc: 'Geração de insights preditivos com MLFlow para identificação de padrões recorrentes e previsão de volume de chamados.' },
   { image: null, title: 'Dashboard de Métricas', desc: 'Visualizações de volume de tickets, tendências e previsões com conformidade à LGPD — anonimização e logs de auditoria.' },
   { image: null, title: 'Controle de Acesso (RBAC)', desc: 'Gestão de permissões por papéis com logs de auditoria completos e mecanismos de exclusão e anonimização de dados pessoais.' },
@@ -26,7 +27,11 @@ defineExpose({ slides })
 </template>
 
 <style scoped>
-.detail { display: flex; flex-direction: column; gap: 16px; }
+.detail {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
 
 .detail-desc {
   font-family: 'VT323', monospace;
