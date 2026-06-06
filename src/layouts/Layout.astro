@@ -33,14 +33,30 @@ const { title = 'Caio Sousa — Portfólio', description = 'Portfólio de desenv
       setTimeout(() => { isAnimating = false; }, 600);
     }
 
+    const BOUNDARY_THRESHOLD = 7000;
+    let boundaryAccum = 0;
+
     window.addEventListener('wheel', (e) => {
+      if (document.body.dataset.modalOpen) { e.preventDefault(); return; }
       const scrollable = (e.target as Element).closest('.projects-scroll, .skill-list');
       if (scrollable) {
         const atBottom = scrollable.scrollTop + scrollable.clientHeight >= scrollable.scrollHeight - 2;
         const atTop = scrollable.scrollTop <= 2;
-        if (e.deltaY > 0 && !atBottom) return;
-        if (e.deltaY < 0 && !atTop) return;
+        const atBoundary = (e.deltaY > 0 && atBottom) || (e.deltaY < 0 && atTop);
+
+        if (!atBoundary) {
+          boundaryAccum = 0;
+          return;
+        }
+
+        boundaryAccum += Math.abs(e.deltaY);
+        e.preventDefault();
+        if (boundaryAccum < BOUNDARY_THRESHOLD || isAnimating) return;
+        boundaryAccum = 0;
+        goTo(current + (e.deltaY > 0 ? 1 : -1));
+        return;
       }
+
       e.preventDefault();
       if (isAnimating) return;
       goTo(current + (e.deltaY > 0 ? 1 : -1));
@@ -56,6 +72,7 @@ const { title = 'Caio Sousa — Portfólio', description = 'Portfólio de desenv
     }, { passive: true });
 
     window.addEventListener('keydown', (e) => {
+      if (document.body.dataset.modalOpen) return;
       if (isAnimating) return;
       if (['ArrowDown', 'PageDown', ' '].includes(e.key)) { e.preventDefault(); goTo(current + 1); }
       if (['ArrowUp', 'PageUp'].includes(e.key)) { e.preventDefault(); goTo(current - 1); }

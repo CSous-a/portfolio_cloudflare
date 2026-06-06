@@ -20,13 +20,14 @@
           @click="activeTech = activeTech === tech ? null : tech"
         >{{ tech }}</button>
       </div>
-      <div class="projects-scroll">
+      <div class="projects-scroll" ref="scrollEl">
         <div class="projects-grid">
           <div
             class="project-card"
             v-for="project in filtered"
             :key="project.title"
             :class="{ featured: project.featured }"
+            @click="selectedProject = project"
           >
             <div class="card-header">
               <div class="card-status">
@@ -46,72 +47,85 @@
       </div>
     </div>
   </section>
+
+  <ProjectModal
+    v-if="selectedProject"
+    :project="selectedProject"
+    @close="selectedProject = null"
+  />
 </template>
 
 <script setup>
-import { ref, computed } from 'vue';
+import { ref, computed, onMounted, nextTick } from 'vue';
+import ProjectModal from './popup_projects/ProjectModal.vue';
 
 const projects = [
   {
+    id: 'geotrack',
     icon: '🗺️',
     title: 'GeoTrack',
     desc: 'API Rest de visualização de dados geoespaciais com mapas interativos e análises de rotas. Feito em parceria com a empresa ITO1',
-    tags: ['Vue.js', 'PostGIS', 'Springboot', 'Java','Oracle','PostgreSQL'],
+    tags: ['Vue.js', 'PostGIS', 'Springboot', 'Java', 'Oracle', 'PostgreSQL'],
     status: 'offline',
     featured: true,
     demo: null,
     repo: 'https://github.com/CSous-a/GeoTrack-4Sem2024Main',
   },
   {
+    id: 'bitaiga',
     icon: '📊',
     title: 'BI Taiga',
     desc: 'Plataforma de Business Intelligence integrada ao Taiga para monitoramento de métricas, desempenho de equipes e acompanhamento estratégico de projetos por meio de dashboards interativos.',
-    tags: ['Vue.js','Vuetify', 'PostgreSQL','Java','SonarCloud','Docker','SpringBoot','Junit','DataWarehouse'],
+    tags: ['Vue.js', 'Vuetify', 'PostgreSQL', 'Java', 'SonarCloud', 'Docker', 'SpringBoot', 'Junit', 'DataWarehouse'],
     status: 'offline',
     featured: true,
     demo: null,
     repo: 'https://github.com/QuantumBitBR/API_5SEM',
   },
   {
-  icon: '⏪',
-  title: 'Agile Assessment',
-  desc: 'Plataforma de avaliação 360° baseada na Escala Likert para acompanhamento de desempenho, feedbacks internos e evolução de equipes Scrum.',
-  tags: ['Python', 'Flask', 'TinyDB', 'HTML', 'CSS'],
-  status: 'offline',
-  featured: false,
-  demo: null,
-  repo: 'https://github.com/CSous-a/AgileAssessment'
-},
-{
-  icon: '🔄',
-  title: 'DataFlow',
-  desc: 'Plataforma de configuração e gerenciamento de pipelines de dados, permitindo mapeamento de metadados, regras de negócio e análise operacional.',
-  tags: ['Java', 'SpringBoot', 'Vue.js', 'JavaScript', 'MySQL', 'HTML', 'CSS'],
-  status: 'offline',
-  featured: true,
-  demo: null,
-  repo: 'https://github.com/CSous-a/DataFlow-3Sem2024'
-},
+    id: 'agileassessment',
+    icon: '⏪',
+    title: 'Agile Assessment',
+    desc: 'Plataforma de avaliação 360° baseada na Escala Likert para acompanhamento de desempenho, feedbacks internos e evolução de equipes Scrum.',
+    tags: ['Python', 'Flask', 'TinyDB', 'HTML', 'CSS'],
+    status: 'offline',
+    featured: false,
+    demo: null,
+    repo: 'https://github.com/CSous-a/AgileAssessment',
+  },
   {
+    id: 'dataflow',
+    icon: '🔄',
+    title: 'DataFlow',
+    desc: 'Plataforma de configuração e gerenciamento de pipelines de dados, permitindo mapeamento de metadados, regras de negócio e análise operacional.',
+    tags: ['Java', 'SpringBoot', 'Vue.js', 'JavaScript', 'MySQL', 'HTML', 'CSS'],
+    status: 'offline',
+    featured: true,
+    demo: null,
+    repo: 'https://github.com/CSous-a/DataFlow-3Sem2024',
+  },
+  {
+    id: 'geodoc',
     icon: '📝',
     title: 'GeoDoc',
     desc: 'Plataforma de gestão e controle documental para centralização, organização e acompanhamento de documentos digitais em ambiente corporativo.',
-    tags: ['Next.js','Docker', 'PostgreSQL','DataWarehouse','SonarCloud','Docker','Springboot','Claude MCP','MDX','typescript'],
+    tags: ['Next.js', 'Docker', 'PostgreSQL', 'DataWarehouse', 'SonarCloud', 'Springboot', 'Claude MCP', 'MDX', 'typescript'],
     status: 'offline',
     featured: true,
     demo: null,
     repo: 'https://github.com/CSous-a/supdoc',
   },
   {
-  icon: '🧠',
-  title: 'VisionData',
-  desc: 'Plataforma de Business Intelligence para consolidação de tickets de suporte, busca inteligente de soluções recorrentes e geração de insights estratégicos e preditivos.',
-  tags: ['Go', 'Nuxt.js', 'Python', 'Elasticsearch', 'MLFlow', 'SQL Server', 'Docker'],
-  status: 'offline',
-  featured: true,
-  demo: '#',
-  repo: 'https://github.com/iNineBD/VisionData-6Sem2025Main',
-},
+    id: 'visiondata',
+    icon: '🧠',
+    title: 'VisionData',
+    desc: 'Plataforma de Business Intelligence para consolidação de tickets de suporte, busca inteligente de soluções recorrentes e geração de insights estratégicos e preditivos.',
+    tags: ['Go', 'Nuxt.js', 'Python', 'Elasticsearch', 'MLFlow', 'SQL Server', 'Docker'],
+    status: 'offline',
+    featured: true,
+    demo: null,
+    repo: 'https://github.com/iNineBD/VisionData-6Sem2025Main',
+  },
 ];
 
 const categoryMap = {
@@ -142,6 +156,17 @@ const filtered = computed(() => {
   const techs = categoryMap[activeCategory.value];
   if (activeTech.value) return projects.filter(p => p.tags.includes(activeTech.value));
   return projects.filter(p => p.tags.some(t => techs.includes(t)));
+});
+
+const selectedProject = ref(null);
+const scrollEl = ref(null);
+
+onMounted(async () => {
+  await nextTick();
+  const firstCard = scrollEl.value?.querySelector('.project-card');
+  if (firstCard && scrollEl.value) {
+    scrollEl.value.style.maxHeight = firstCard.offsetHeight + 'px';
+  }
 });
 </script>
 
@@ -186,11 +211,11 @@ const filtered = computed(() => {
 }
 
 .projects-scroll {
-  max-height: 344px;
   overflow-y: auto;
   overflow-x: hidden;
   padding-right: 6px;
-  padding-top: 4px;
+  padding-top: 1px;
+  height: 70vh;
   scrollbar-width: thin;
   scrollbar-color: var(--green) var(--bg);
 }
@@ -225,6 +250,7 @@ const filtered = computed(() => {
   transition: border-color 0.2s, transform 0.2s;
   position: relative;
   overflow: hidden;
+  cursor: pointer;
 }
 
 .project-card::before {

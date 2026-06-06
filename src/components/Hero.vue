@@ -60,12 +60,12 @@ const roles = [
 ];
 
 const stats = [
-  { value: '3', label: 'anos de exp.' },
+  { value: '1', label: 'ano de exp.' },
   { value: '5+', label: 'projetos' },
   { value: '∞', label: 'café' },
 ];
 
-const tags = ['Vue','Javascript','React' ,'Python','Java', 'SQL','NOSQL', 'Docker','Git', 'Rust', 'Linux Server'];
+const tags = ['Java','Python','Rust','Node','JavaScript','SQL','NOSQL', 'Docker','Git', 'Linux Server'];
 
 const displayedRole = ref('');
 const typing = ref(true);
