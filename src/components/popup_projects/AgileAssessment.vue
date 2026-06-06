@@ -1,3 +1,12 @@
+<script setup>
+const slides = [
+  { image: null, title: 'Formulário de Avaliação', desc: 'Formulário estruturado com critérios baseados na Escala Likert, aplicado ao final de cada sprint da equipe Scrum.' },
+  { image: null, title: 'Resultados Individuais', desc: 'Histórico de evolução individual com gráficos comparativos entre sprints para acompanhamento da progressão do membro.' },
+  { image: null, title: 'Feedback Anônimo', desc: 'Mecanismo de feedback anônimo entre membros para redução de viés e maior honestidade nas avaliações periódicas.' },
+]
+defineExpose({ slides })
+</script>
+
 <template>
   <div class="detail">
     <p class="detail-desc">

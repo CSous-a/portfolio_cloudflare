@@ -1,3 +1,12 @@
+<script setup>
+const slides = [
+  { image: null, title: 'Visão Geral', desc: 'Gerenciamento automatizado de dados de geolocalização em tempo real provenientes de dispositivos IoT — wearables, tags e smartphones.' },
+  { image: null, title: 'Mapa Interativo', desc: 'Plotagem de rotas e pontos de parada em mapa interativo com suporte a zoom, arrastar e filtros por pessoa e intervalo de tempo.' },
+  { image: null, title: 'Autenticação', desc: 'Sistema de login com controle de acesso por credenciais seguras, garantindo que apenas usuários autorizados acessem os dados operacionais.' },
+]
+defineExpose({ slides })
+</script>
+
 <template>
   <div class="detail">
     <p class="detail-desc">

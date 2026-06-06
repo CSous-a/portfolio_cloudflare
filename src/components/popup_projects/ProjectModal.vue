@@ -78,14 +78,14 @@
             </div>
 
             <!-- Slide 0: descrição detalhada do projeto -->
-            <div class="m-detail" v-if="currentSlide === 0">
-              <component :is="detailComponent" v-if="detailComponent" />
+            <div class="m-detail" v-show="currentSlide === 0">
+              <component :is="detailComponent" v-if="detailComponent" ref="detailRef" />
             </div>
 
             <!-- Slides seguintes: caption específico do slide -->
-            <div class="m-detail" v-else>
-              <p class="slide-caption-title">// {{ slides[currentSlide].title }}</p>
-              <p class="slide-caption-desc">{{ slides[currentSlide].desc }}</p>
+            <div class="m-detail" v-show="currentSlide !== 0">
+              <p class="slide-caption-title">// {{ slides[currentSlide]?.title }}</p>
+              <p class="slide-caption-desc">{{ slides[currentSlide]?.desc }}</p>
             </div>
 
           </div>
@@ -97,7 +97,7 @@
 </template>
 
 <script setup>
-import { ref, computed, defineAsyncComponent, onMounted, onUnmounted } from 'vue';
+import { ref, computed, watch, defineAsyncComponent, onMounted, onUnmounted } from 'vue';
 
 const props = defineProps({ project: Object });
 const emit = defineEmits(['close']);
@@ -112,9 +112,13 @@ const componentMap = {
 };
 
 const detailComponent = computed(() => componentMap[props.project?.id]);
-const slides = computed(() => props.project?.slides ?? []);
-
+const detailRef = ref(null);
+const slides = ref([]);
 const currentSlide = ref(0);
+
+watch(detailRef, (val) => {
+  if (val?.slides) slides.value = val.slides;
+});
 
 function prev() {
   currentSlide.value = (currentSlide.value - 1 + slides.value.length) % slides.value.length;

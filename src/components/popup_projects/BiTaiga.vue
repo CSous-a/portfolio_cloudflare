@@ -1,3 +1,13 @@
+<script setup>
+const slides = [
+  { image: null, title: 'Dashboard Principal', desc: 'Visão consolidada de métricas de cards por status, distribuição de tarefas e acompanhamento de equipes em tempo real.' },
+  { image: null, title: 'Gestão de Equipes', desc: 'Acompanhamento de desempenho individual com cálculo de tempo médio de execução e identificação de retrabalhos por colaborador.' },
+  { image: null, title: 'Controle de Acesso', desc: 'Três níveis de perfil — Operador, Gerente e Administrador — com permissões e visibilidades distintas sobre os dados.' },
+  { image: null, title: 'Exportação de Dados', desc: 'Geração de relatórios em CSV com filtros por período e conformidade com o nível de permissão do usuário logado.' },
+]
+defineExpose({ slides })
+</script>
+
 <template>
   <div class="detail">
     <p class="detail-desc">

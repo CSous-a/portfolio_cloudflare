@@ -1,3 +1,12 @@
+<script setup>
+const slides = [
+  { image: null, title: 'Upload de Arquivos', desc: 'Interface de upload para CSV e Excel com detecção automática da estrutura do arquivo e apresentação dos campos disponíveis.' },
+  { image: null, title: 'Mapeamento de Campos', desc: 'Configuração visual de regras "de/para" para mapeamento de campos entre a fonte de dados e o destino do pipeline.' },
+  { image: null, title: 'Dashboard Analítico', desc: 'Visualizações quantitativas das configurações de pipeline com exportação das regras definidas em formato YAML.' },
+]
+defineExpose({ slides })
+</script>
+
 <template>
   <div class="detail">
     <p class="detail-desc">

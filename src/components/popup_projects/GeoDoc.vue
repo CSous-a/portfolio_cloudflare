@@ -1,3 +1,12 @@
+<script setup>
+const slides = [
+  { image: null, title: 'Repositório de Documentos', desc: 'Centralização de documentos corporativos com busca por metadados, categorias e status de aprovação.' },
+  { image: null, title: 'Fluxo de Aprovação', desc: 'Pipeline de revisão e aprovação com rastreabilidade completa de alterações e notificações automáticas aos responsáveis.' },
+  { image: null, title: 'Histórico de Versões', desc: 'Versionamento completo com diff entre revisões e possibilidade de restaurar versões anteriores a qualquer momento.' },
+]
+defineExpose({ slides })
+</script>
+
 <template>
   <div class="detail">
     <p class="detail-desc">
