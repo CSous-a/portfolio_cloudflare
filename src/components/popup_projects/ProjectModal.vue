@@ -7,7 +7,7 @@
 
         <div class="modal-grid">
 
-          <!-- Lado esquerdo: carrossel -->
+          <!-- Lado esquerdo: carrossel + tags + links -->
           <div class="modal-left">
 
             <div class="carousel-stage">
@@ -43,9 +43,8 @@
               <button class="nav-btn" @click="next">▶</button>
             </div>
 
-            <div class="slide-caption" v-if="currentSlideData">
-              <p class="caption-title">// {{ currentSlideData.title }}</p>
-              <p class="caption-desc">{{ currentSlideData.desc }}</p>
+            <div class="m-tags">
+              <span class="badge" v-for="tag in project.tags" :key="tag">{{ tag }}</span>
             </div>
 
             <div class="modal-links">
@@ -67,7 +66,7 @@
 
           </div>
 
-          <!-- Lado direito: descrição -->
+          <!-- Lado direito: título + conteúdo dinâmico por slide -->
           <div class="modal-right">
 
             <div class="modal-header">
@@ -78,12 +77,15 @@
               </div>
             </div>
 
-            <div class="m-tags">
-              <span class="badge" v-for="tag in project.tags" :key="tag">{{ tag }}</span>
+            <!-- Slide 0: descrição detalhada do projeto -->
+            <div class="m-detail" v-if="currentSlide === 0">
+              <component :is="detailComponent" v-if="detailComponent" />
             </div>
 
-            <div class="m-detail">
-              <component :is="detailComponent" v-if="detailComponent" />
+            <!-- Slides seguintes: caption específico do slide -->
+            <div class="m-detail" v-else>
+              <p class="slide-caption-title">// {{ slides[currentSlide].title }}</p>
+              <p class="slide-caption-desc">{{ slides[currentSlide].desc }}</p>
             </div>
 
           </div>
@@ -113,7 +115,6 @@ const detailComponent = computed(() => componentMap[props.project?.id]);
 const slides = computed(() => props.project?.slides ?? []);
 
 const currentSlide = ref(0);
-const currentSlideData = computed(() => slides.value[currentSlide.value]);
 
 function prev() {
   currentSlide.value = (currentSlide.value - 1 + slides.value.length) % slides.value.length;
@@ -190,7 +191,7 @@ onUnmounted(() => {
 
 .modal-grid {
   display: grid;
-  grid-template-columns: 1fr 1.4fr;
+  grid-template-columns: 1.1fr 1fr;
   height: 100%;
 }
 
@@ -198,15 +199,15 @@ onUnmounted(() => {
 .modal-left {
   display: flex;
   flex-direction: column;
-  gap: 16px;
-  padding: 32px 24px 32px 32px;
+  gap: 14px;
+  padding: 28px 20px 28px 28px;
   border-right: 1px solid var(--border);
   overflow: hidden;
 }
 
 .carousel-stage {
-  aspect-ratio: 4/3;
-  flex-shrink: 0;
+  flex: 1;
+  min-height: 0;
   background: var(--bg);
   border: 1px solid var(--border);
   position: relative;
@@ -281,30 +282,25 @@ onUnmounted(() => {
   border-color: var(--green);
 }
 
-.slide-caption {
-  flex: 1;
-  border-top: 1px solid var(--border);
-  padding-top: 14px;
+.m-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  flex-shrink: 0;
   overflow-y: auto;
+  max-height: 88px;
   scrollbar-width: thin;
   scrollbar-color: var(--border) transparent;
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
 }
 
-.caption-title {
+.badge {
   font-family: 'VT323', monospace;
-  font-size: 16px;
-  color: var(--cyan);
-  flex-shrink: 0;
-}
-
-.caption-desc {
-  font-family: 'VT323', monospace;
-  font-size: 17px;
-  color: var(--text-dim);
-  line-height: 1.5;
+  font-size: 14px;
+  padding: 2px 8px;
+  border: 1px solid var(--border);
+  color: var(--purple);
+  background: rgba(191, 90, 242, 0.05);
+  height: fit-content;
 }
 
 .modal-links {
@@ -312,6 +308,32 @@ onUnmounted(() => {
   gap: 12px;
   flex-wrap: wrap;
   flex-shrink: 0;
+  margin-top: 22px;
+}
+
+.pixel-btn {
+  font-family: 'VT323', monospace;
+  font-size: 17px;
+  padding: 4px 16px;
+  border: 1px solid var(--green);
+  color: var(--green);
+  background: rgba(0, 255, 65, 0.05);
+  text-decoration: none;
+  cursor: pointer;
+  transition: background 0.2s, box-shadow 0.2s;
+}
+.pixel-btn:hover {
+  background: rgba(0, 255, 65, 0.12);
+  box-shadow: 0 0 8px rgba(0, 255, 65, 0.3);
+}
+.pixel-btn.secondary {
+  border-color: var(--cyan);
+  color: var(--cyan);
+  background: rgba(0, 255, 255, 0.05);
+}
+.pixel-btn.secondary:hover {
+  background: rgba(0, 255, 255, 0.12);
+  box-shadow: 0 0 8px rgba(0, 255, 255, 0.3);
 }
 
 /* ── Lado direito ── */
@@ -319,7 +341,7 @@ onUnmounted(() => {
   display: flex;
   flex-direction: column;
   gap: 20px;
-  padding: 32px 40px 32px 28px;
+  padding: 32px 36px 32px 28px;
   height: 100%;
   overflow: hidden;
 }
@@ -349,22 +371,6 @@ onUnmounted(() => {
 .m-status.online  { color: var(--green); }
 .m-status.offline { color: #ff5f57; }
 
-.m-tags {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 6px;
-  flex-shrink: 0;
-}
-
-.badge {
-  font-family: 'VT323', monospace;
-  font-size: 14px;
-  padding: 2px 8px;
-  border: 1px solid var(--border);
-  color: var(--purple);
-  background: rgba(191, 90, 242, 0.05);
-}
-
 .m-detail {
   flex: 1;
   border-top: 1px solid var(--border);
@@ -372,6 +378,22 @@ onUnmounted(() => {
   overflow-y: auto;
   scrollbar-width: thin;
   scrollbar-color: var(--border) transparent;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.slide-caption-title {
+  font-family: 'VT323', monospace;
+  font-size: 18px;
+  color: var(--cyan);
+}
+
+.slide-caption-desc {
+  font-family: 'VT323', monospace;
+  font-size: 18px;
+  color: var(--text-dim);
+  line-height: 1.6;
 }
 
 @media (max-width: 700px) {
@@ -389,12 +411,13 @@ onUnmounted(() => {
     border-bottom: 1px solid var(--border);
     padding: 24px;
     overflow: visible;
+    min-height: 60vh;
   }
   .modal-right {
     padding: 24px;
     height: auto;
     overflow: visible;
   }
-  .slide-caption, .m-detail { overflow: visible; }
+  .m-tags, .m-detail { overflow: visible; max-height: none; }
 }
 </style>
