@@ -25,10 +25,10 @@ const isScrolled = ref(false);
 const menuOpen = ref(false);
 
 const links = [
-  { href: '#about', label: 'about' },
+  { href: '#about', label: 'sobre' },
   { href: '#skills', label: 'skills' },
-  { href: '#projects', label: 'projects' },
-  { href: '#contact', label: 'contact' },
+  { href: '#projects', label: 'projetos' },
+  { href: '#contact', label: 'contato' },
 ];
 
 function handleScroll() {

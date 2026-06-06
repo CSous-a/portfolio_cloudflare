@@ -1,7 +1,7 @@
 <template>
   <section id="about" class="section">
     <div class="container">
-      <h2 class="section-title">about_me</h2>
+      <h2 class="section-title">sobre_mim</h2>
       <div class="about-grid">
         <div class="about-text">
           <div class="terminal-window">
@@ -9,7 +9,7 @@
               <span class="dot red"></span>
               <span class="dot yellow"></span>
               <span class="dot green"></span>
-              <span class="terminal-title">about.txt</span>
+              <span class="terminal-title">sobre.txt</span>
             </div>
             <div class="terminal-body">
               <p v-for="(line, i) in lines" :key="i" class="terminal-line">
@@ -43,14 +43,14 @@ const lines = [
   { comment: true, text: '// quem sou eu' },
   { key: 'Nome', val: '"Caio Sousa"' },
   { key: 'Localização', val: '"Brasil"' },
-  { key: 'Role', val: '"Software Developer"' },
+  { key: 'Cargo', val: '"Software Developer"' },
   { text: '' },
   { comment: true, text: '// o que faço' },
   { key: 'Foco', val: '["Web Apps", "APIs", "GeoData","Database","DevOps"]', type: 'array' },
   { key: 'disponível', val: 'true', type: 'bool' },
   { text: '' },
-  { comment: true, text: '// Linguas' },
-  { key: 'Linguas', val: '["Inglês - B2", "Português - Nativo"]', type: 'array' },
+  { comment: true, text: '// idiomas' },
+  { key: 'Idiomas', val: '["Inglês - B2", "Português - Nativo"]', type: 'array' },
   { text: '' },
   { comment: true, text: '// fora do teclado' },
   { key: 'Hobbies', val: '["trilhas", "café", "games", "motos"]', type: 'array' },

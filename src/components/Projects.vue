@@ -1,7 +1,7 @@
 <template>
   <section id="projects" class="section">
     <div class="container">
-      <h2 class="section-title">projects</h2>
+      <h2 class="section-title">projetos</h2>
       <div class="filter-bar">
         <button
           v-for="tag in allTags"
@@ -26,7 +26,7 @@
               </div>
               <div class="card-links">
                 <a v-if="project.demo" :href="project.demo" target="_blank" rel="noopener noreferrer" class="card-link">demo</a>
-                <a v-if="project.repo" :href="project.repo" target="_blank" rel="noopener noreferrer" class="card-link">code</a>
+                <a v-if="project.repo" :href="project.repo" target="_blank" rel="noopener noreferrer" class="card-link">código</a>
               </div>
             </div>
             <div class="card-icon">{{ project.icon }}</div>
