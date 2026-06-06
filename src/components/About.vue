@@ -41,19 +41,19 @@
 <script setup>
 const lines = [
   { comment: true, text: '// quem sou eu' },
-  { key: 'nome', val: '"Caio Sousa"' },
-  { key: 'localização', val: '"Brasil 🇧🇷"' },
-  { key: 'role', val: '"Jr Developer"' },
+  { key: 'Nome', val: '"Caio Sousa"' },
+  { key: 'Localização', val: '"Brasil"' },
+  { key: 'Role', val: '"Software Developer"' },
   { text: '' },
   { comment: true, text: '// o que faço' },
-  { key: 'foco', val: '["Web Apps", "APIs", "GeoData","Database","DevOps"]', type: 'array' },
+  { key: 'Foco', val: '["Web Apps", "APIs", "GeoData","Database","DevOps"]', type: 'array' },
   { key: 'disponível', val: 'true', type: 'bool' },
   { text: '' },
   { comment: true, text: '// Linguas' },
-  { key: 'hobbies', val: '["Inglês - B2", "Português - Nativo"]', type: 'array' },
+  { key: 'Linguas', val: '["Inglês - B2", "Português - Nativo"]', type: 'array' },
   { text: '' },
   { comment: true, text: '// fora do teclado' },
-  { key: 'hobbies', val: '["trilhas", "café", "games", "motos"]', type: 'array' },
+  { key: 'Hobbies', val: '["trilhas", "café", "games", "motos"]', type: 'array' },
 ];
 
 const cards = [
