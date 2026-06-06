@@ -23,16 +23,23 @@
 }
 
 html {
-  scroll-behavior: smooth;
+  height: 100vh;
+  overflow: hidden;
 }
 
 body {
+  height: 100vh;
+  overflow: hidden;
   background-color: var(--bg);
   color: var(--text);
   font-family: 'VT323', monospace;
   font-size: 18px;
   line-height: 1.6;
-  overflow-x: hidden;
+}
+
+#fullpage {
+  transition: transform 0.55s cubic-bezier(0.77, 0, 0.175, 1);
+  will-change: transform;
 }
 
 body::before {
@@ -66,6 +73,8 @@ a:hover {
 }
 
 .section {
+  height: 100vh;
+  overflow: hidden;
   padding: 80px 0;
 }
 
