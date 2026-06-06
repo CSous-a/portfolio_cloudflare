@@ -10,7 +10,7 @@
           <!-- Lado esquerdo: carrossel + tags + links -->
           <div class="modal-left">
 
-            <div class="carousel-stage">
+            <div class="carousel-stage" @click="openFullscreen">
               <div
                 v-for="(slide, i) in slides"
                 :key="i"
@@ -27,6 +27,7 @@
                   playsinline
                   autoplay
                   controls
+                  @click.stop
                 />
                 <img
                   v-else-if="slide.image"
@@ -43,6 +44,9 @@
                   <span class="placeholder-label">// {{ slide.title ? slide.title.toLowerCase().replace(/ /g, '_') : 'preview' }}.png</span>
                 </div>
               </div>
+
+              <!-- hint de expand (aparece no hover) -->
+              <span class="expand-hint" v-if="currentSlideData?.image || currentSlideData?.video">⛶</span>
             </div>
 
             <div class="carousel-nav">
@@ -109,6 +113,28 @@
         </div>
       </div>
     </div>
+
+    <!-- Overlay fullscreen -->
+    <div v-if="isFullscreen" class="fs-overlay" @click="isFullscreen = false">
+      <button class="fs-close" @click="isFullscreen = false">✕</button>
+      <video
+        v-if="currentSlideData?.video"
+        :src="currentSlideData.video"
+        :style="{ objectFit: currentSlideData.fit ?? 'contain' }"
+        autoplay
+        muted
+        loop
+        playsinline
+        controls
+        @click.stop
+      />
+      <img
+        v-else-if="currentSlideData?.image"
+        :src="currentSlideData.image"
+        :style="{ objectFit: currentSlideData.fit ?? 'contain' }"
+        @click.stop
+      />
+    </div>
   </Teleport>
 </template>
 
@@ -131,10 +157,26 @@ const detailComponent = computed(() => componentMap[props.project?.id]);
 const detailRef = ref(null);
 const slides = ref([]);
 const currentSlide = ref(0);
+const videoRefs = reactive({});
+const isFullscreen = ref(false);
+
+const currentSlideData = computed(() => slides.value[currentSlide.value]);
 
 watch(detailRef, (val) => {
   if (val?.slides) slides.value = val.slides;
 });
+
+watch(currentSlide, (newIdx, oldIdx) => {
+  const prev = videoRefs[oldIdx];
+  if (prev) prev.pause();
+  const next = videoRefs[newIdx];
+  if (next) next.play().catch(() => {});
+});
+
+function openFullscreen() {
+  const slide = currentSlideData.value;
+  if (slide?.image || slide?.video) isFullscreen.value = true;
+}
 
 function prev() {
   currentSlide.value = (currentSlide.value - 1 + slides.value.length) % slides.value.length;
@@ -144,7 +186,11 @@ function next() {
 }
 
 function onKey(e) {
-  if (e.key === 'Escape')     emit('close');
+  if (e.key === 'Escape') {
+    if (isFullscreen.value) { isFullscreen.value = false; return; }
+    emit('close');
+  }
+  if (isFullscreen.value) return;
   if (e.key === 'ArrowLeft')  prev();
   if (e.key === 'ArrowRight') next();
 }
@@ -232,17 +278,32 @@ onUnmounted(() => {
   border: 1px solid var(--border);
   position: relative;
   overflow: hidden;
+  cursor: zoom-in;
 }
+
+.expand-hint {
+  position: absolute;
+  bottom: 8px;
+  right: 10px;
+  font-size: 18px;
+  color: rgba(255,255,255,0.5);
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.2s;
+}
+.carousel-stage:hover .expand-hint { opacity: 1; }
 
 .carousel-slide {
   width: 100%;
   height: 100%;
 }
 
-.carousel-slide img {
+.carousel-slide img,
+.carousel-slide video {
   width: 100%;
   height: 100%;
   object-fit: cover;
+  display: block;
 }
 
 .placeholder {
@@ -253,6 +314,7 @@ onUnmounted(() => {
   align-items: center;
   justify-content: center;
   gap: 12px;
+  cursor: default;
   background: repeating-linear-gradient(
     45deg,
     var(--bg),
@@ -415,6 +477,45 @@ onUnmounted(() => {
   color: var(--text-dim);
   line-height: 1.6;
 }
+
+/* ── Fullscreen overlay ── */
+.fs-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 2000;
+  background: rgba(0, 0, 0, 0.96);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  animation: fadeIn 0.15s ease;
+  cursor: zoom-out;
+}
+
+.fs-overlay img,
+.fs-overlay video {
+  max-width: 95vw;
+  max-height: 95vh;
+  object-fit: contain;
+  cursor: default;
+  box-shadow: 0 0 60px rgba(0,0,0,0.8);
+}
+
+.fs-close {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  background: none;
+  border: 1px solid rgba(255,255,255,0.3);
+  color: rgba(255,255,255,0.7);
+  font-family: 'VT323', monospace;
+  font-size: 20px;
+  width: 36px;
+  height: 36px;
+  cursor: pointer;
+  transition: border-color 0.2s, color 0.2s;
+  z-index: 10;
+}
+.fs-close:hover { border-color: #fff; color: #fff; }
 
 @media (max-width: 700px) {
   .modal {
