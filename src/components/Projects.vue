@@ -25,8 +25,8 @@
                 <span class="status-text">{{ project.status }}</span>
               </div>
               <div class="card-links">
-                <a v-if="project.demo" :href="project.demo" target="_blank" class="card-link">demo</a>
-                <a v-if="project.repo" :href="project.repo" target="_blank" class="card-link">code</a>
+                <a v-if="project.demo" :href="project.demo" target="_blank" rel="noopener noreferrer" class="card-link">demo</a>
+                <a v-if="project.repo" :href="project.repo" target="_blank" rel="noopener noreferrer" class="card-link">code</a>
               </div>
             </div>
             <div class="card-icon">{{ project.icon }}</div>

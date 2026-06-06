@@ -14,6 +14,7 @@
               :key="link.label"
               :href="link.href"
               target="_blank"
+              rel="noopener noreferrer"
               class="contact-link"
             >
               <span class="link-icon">{{ link.icon }}</span>
