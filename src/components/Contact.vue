@@ -139,16 +139,16 @@ async function send() {
 .contact-grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 48px;
+  gap: 3rem;
   align-items: start;
 }
 
 .contact-intro {
   font-family: 'VT323', monospace;
-  font-size: 22px;
+  font-size: 1.375rem;
   color: var(--text-dim);
   line-height: 1.6;
-  margin-bottom: 32px;
+  margin-bottom: 2rem;
 }
 
 .accent {
@@ -158,14 +158,14 @@ async function send() {
 .contact-links {
   display: flex;
   flex-direction: column;
-  gap: 16px;
+  gap: 1rem;
 }
 
 .contact-link {
   display: flex;
   align-items: center;
-  gap: 16px;
-  padding: 16px;
+  gap: 1rem;
+  padding: 1rem;
   background: var(--bg-card);
   border: 1px solid var(--border);
   text-decoration: none;
@@ -174,58 +174,58 @@ async function send() {
 
 .contact-link:hover {
   border-color: var(--green);
-  transform: translateX(4px);
+  transform: translateX(0.25rem);
 }
 
 .link-icon {
-  font-size: 20px;
+  font-size: 1.25rem;
   flex-shrink: 0;
 }
 
 .link-label {
   display: block;
   font-family: 'Press Start 2P', monospace;
-  font-size: 9px;
+  font-size: 0.5625rem;
   color: var(--text-dim);
-  margin-bottom: 4px;
+  margin-bottom: 0.25rem;
 }
 
 .link-val {
   display: block;
   font-family: 'VT323', monospace;
-  font-size: 17px;
+  font-size: 1.0625rem;
   color: var(--text);
 }
 
 .link-arrow {
   margin-left: auto;
   color: var(--green);
-  font-size: 20px;
+  font-size: 1.25rem;
 }
 
 /* Form */
 .contact-form {
   display: flex;
   flex-direction: column;
-  gap: 20px;
+  gap: 1.25rem;
 }
 
 .form-group {
   display: flex;
   flex-direction: column;
-  gap: 6px;
+  gap: 0.375rem;
 }
 
 .form-label {
   font-family: 'VT323', monospace;
-  font-size: 16px;
+  font-size: 1rem;
   color: var(--text-dim);
 }
 
 .form-input {
   font-family: 'VT323', monospace;
-  font-size: 18px;
-  padding: 10px 14px;
+  font-size: 1.125rem;
+  padding: 0.625rem 0.875rem;
   background: var(--bg-card);
   border: 1px solid var(--border);
   color: var(--text);
@@ -244,25 +244,25 @@ async function send() {
 
 .form-textarea {
   resize: vertical;
-  min-height: 120px;
+  min-height: 7.5rem;
 }
 
 .success-msg {
   font-family: 'VT323', monospace;
-  font-size: 18px;
+  font-size: 1.125rem;
   color: var(--green);
 }
 
 .error-msg {
   font-family: 'VT323', monospace;
-  font-size: 18px;
+  font-size: 1.125rem;
   color: #ff4444;
 }
 
 /* Footer */
 .footer {
-  margin-top: 80px;
-  padding: 24px 0;
+  margin-top: 5rem;
+  padding: 1.5rem 0;
   border-top: 1px solid var(--border);
 }
 
@@ -271,12 +271,12 @@ async function send() {
   justify-content: space-between;
   align-items: center;
   flex-wrap: wrap;
-  gap: 12px;
+  gap: 0.75rem;
 }
 
 .footer-logo {
   font-family: 'Press Start 2P', monospace;
-  font-size: 14px;
+  font-size: 0.875rem;
   color: var(--text-dim);
 }
 
@@ -286,7 +286,7 @@ async function send() {
 
 .footer-text {
   font-family: 'VT323', monospace;
-  font-size: 18px;
+  font-size: 1.125rem;
   color: var(--text-dim);
 }
 
@@ -296,7 +296,7 @@ async function send() {
 
 .footer-copy {
   font-family: 'VT323', monospace;
-  font-size: 16px;
+  font-size: 1rem;
   color: var(--text-dim);
 }
 

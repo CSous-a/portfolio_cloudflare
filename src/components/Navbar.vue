@@ -46,13 +46,13 @@ onUnmounted(() => window.removeEventListener('scroll', handleScroll));
   left: 0;
   right: 0;
   z-index: 100;
-  padding: 20px 0;
+  padding: 1.25rem 0;
   transition: background 0.3s, padding 0.3s;
 }
 
 .navbar.scrolled {
   background: rgba(13, 13, 13, 0.95);
-  padding: 12px 0;
+  padding: 0.75rem 0;
   border-bottom: 1px solid var(--border);
   backdrop-filter: blur(8px);
 }
@@ -65,7 +65,7 @@ onUnmounted(() => window.removeEventListener('scroll', handleScroll));
 
 .nav-logo {
   font-family: 'Press Start 2P', monospace;
-  font-size: 16px;
+  font-size: 1rem;
   color: var(--text);
   text-decoration: none;
   letter-spacing: 2px;
@@ -78,12 +78,12 @@ onUnmounted(() => window.removeEventListener('scroll', handleScroll));
 .nav-links {
   list-style: none;
   display: flex;
-  gap: 32px;
+  gap: 2rem;
 }
 
 .nav-links a {
   font-family: 'VT323', monospace;
-  font-size: 20px;
+  font-size: 1.25rem;
   color: var(--text-dim);
   text-decoration: none;
   transition: color 0.2s;
@@ -102,16 +102,16 @@ onUnmounted(() => window.removeEventListener('scroll', handleScroll));
 .menu-toggle {
   display: none;
   flex-direction: column;
-  gap: 5px;
+  gap: 0.3125rem;
   background: none;
   border: none;
   cursor: pointer;
-  padding: 4px;
+  padding: 0.25rem;
 }
 
 .menu-toggle span {
   display: block;
-  width: 22px;
+  width: 1.375rem;
   height: 2px;
   background: var(--green);
 }
@@ -131,7 +131,7 @@ onUnmounted(() => window.removeEventListener('scroll', handleScroll));
     gap: 0;
     background: rgba(13,13,13,0.98);
     border-bottom: 1px solid var(--border);
-    padding: 16px 0;
+    padding: 1rem 0;
   }
 
   .nav-links.open {
@@ -139,7 +139,7 @@ onUnmounted(() => window.removeEventListener('scroll', handleScroll));
   }
 
   .nav-links li {
-    padding: 10px 24px;
+    padding: 0.625rem 1.5rem;
   }
 }
 </style>

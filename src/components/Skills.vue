@@ -93,15 +93,15 @@ const groups = [
 .skills-layout {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
-  gap: 32px;
-  margin-bottom: 48px;
+  gap: 2rem;
+  margin-bottom: 3rem;
 }
 
 .group-title {
   font-family: 'Press Start 2P', monospace;
-  font-size: 11px;
+  font-size: 0.6875rem;
   color: var(--text-dim);
-  margin-bottom: 20px;
+  margin-bottom: 1.25rem;
 }
 
 .group-bracket {
@@ -111,10 +111,10 @@ const groups = [
 .skill-list {
   display: flex;
   flex-direction: column;
-  gap: 14px;
-  max-height: 188px;
+  gap: 0.875rem;
+  max-height: 11.75rem;
   overflow-y: auto;
-  padding-right: 6px;
+  padding-right: 0.375rem;
   scrollbar-width: thin;
   scrollbar-color: var(--group-color) var(--bg);
 }
@@ -136,23 +136,23 @@ const groups = [
 .skill-header {
   display: flex;
   justify-content: space-between;
-  margin-bottom: 6px;
+  margin-bottom: 0.375rem;
 }
 
 .skill-name {
   font-family: 'VT323', monospace;
-  font-size: 18px;
+  font-size: 1.125rem;
   color: var(--text);
 }
 
 .skill-level {
   font-family: 'VT323', monospace;
-  font-size: 16px;
+  font-size: 1rem;
   color: var(--text-dim);
 }
 
 .skill-bar {
-  height: 8px;
+  height: 0.5rem;
   background: var(--bg);
   border: 1px solid var(--border);
   position: relative;
@@ -185,20 +185,20 @@ const groups = [
 
 /* Tools */
 .tools-section {
-  padding-top: 32px;
+  padding-top: 2rem;
   border-top: 1px solid var(--border);
 }
 
 .tools-grid {
   display: flex;
   flex-wrap: wrap;
-  gap: 10px;
+  gap: 0.625rem;
 }
 
 .tool-badge {
   font-family: 'VT323', monospace;
-  font-size: 16px;
-  padding: 4px 12px;
+  font-size: 1rem;
+  padding: 0.25rem 0.75rem;
   border: 1px solid var(--border);
   color: var(--text-dim);
   background: var(--bg);
