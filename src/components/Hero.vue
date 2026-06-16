@@ -3,7 +3,7 @@
     <div class="container">
       <div class="hero-content">
         <p class="hero-greeting">
-          <span class="prompt">$</span> Jr Developer
+          <span class="prompt">$</span> Software Developer - Backend
         </p>
         <h1 class="hero-name">
           <span class="name-line">Caio</span>
@@ -105,34 +105,34 @@ onMounted(() => setTimeout(tick, 500));
   display: flex;
   flex-direction: column;
   justify-content: center;
-  padding-top: 100px;
+  padding-top: 6.25rem;
   position: relative;
 }
 
 .container {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 48px;
+  gap: 3rem;
   align-items: center;
 }
 
 .hero-greeting {
   font-family: 'VT323', monospace;
-  font-size: 22px;
+  font-size: 1.375rem;
   color: var(--text-dim);
-  margin-bottom: 12px;
+  margin-bottom: 0.75rem;
 }
 
 .prompt {
   color: var(--green);
-  margin-right: 8px;
+  margin-right: 0.5rem;
 }
 
 .hero-name {
   font-family: 'Press Start 2P', monospace;
-  font-size: clamp(24px, 4vw, 42px);
+  font-size: clamp(1.5rem, 4vw, 2.625rem);
   line-height: 1.3;
-  margin-bottom: 20px;
+  margin-bottom: 1.25rem;
 }
 
 .name-line {
@@ -141,20 +141,20 @@ onMounted(() => setTimeout(tick, 500));
 
 .accent {
   color: var(--green);
-  text-shadow: 0 0 20px rgba(0,255,65,0.4);
+  text-shadow: 0 0 20px color-mix(in srgb, var(--green) 40%, transparent);
 }
 
 .hero-role {
   font-family: 'VT323', monospace;
-  font-size: 26px;
+  font-size: 1.625rem;
   color: var(--cyan);
-  margin-bottom: 24px;
-  min-height: 32px;
+  margin-bottom: 1.5rem;
+  min-height: 2rem;
 }
 
 .role-prefix {
   color: var(--text-dim);
-  margin-right: 8px;
+  margin-right: 0.5rem;
 }
 
 .cursor {
@@ -172,42 +172,42 @@ onMounted(() => setTimeout(tick, 500));
 
 .hero-desc {
   font-family: 'VT323', monospace;
-  font-size: 20px;
+  font-size: 1.25rem;
   color: var(--text-dim);
-  max-width: 480px;
-  margin-bottom: 32px;
+  max-width: 30rem;
+  margin-bottom: 2rem;
   line-height: 1.5;
 }
 
 .hero-actions {
   display: flex;
-  gap: 16px;
+  gap: 1rem;
   flex-wrap: wrap;
-  margin-bottom: 40px;
+  margin-bottom: 2.5rem;
 }
 
 .hero-stats {
   display: flex;
-  gap: 32px;
+  gap: 2rem;
   border-top: 1px solid var(--border);
-  padding-top: 24px;
+  padding-top: 1.5rem;
 }
 
 .stat {
   display: flex;
   flex-direction: column;
-  gap: 4px;
+  gap: 0.25rem;
 }
 
 .stat-value {
   font-family: 'Press Start 2P', monospace;
-  font-size: 18px;
+  font-size: 1.125rem;
   color: var(--green);
 }
 
 .stat-label {
   font-family: 'VT323', monospace;
-  font-size: 16px;
+  font-size: 1rem;
   color: var(--text-dim);
 }
 
@@ -216,12 +216,12 @@ onMounted(() => setTimeout(tick, 500));
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 24px;
+  gap: 1.5rem;
 }
 
 .pixel-avatar {
   border: 2px solid var(--border);
-  padding: 12px;
+  padding: 0.75rem;
   position: relative;
   background: var(--bg-card);
   display: inline-block;
@@ -230,38 +230,38 @@ onMounted(() => setTimeout(tick, 500));
 .pixel-avatar::before {
   content: 'avatar.png';
   position: absolute;
-  top: -12px;
-  left: 12px;
+  top: -0.75rem;
+  left: 0.75rem;
   font-family: 'VT323', monospace;
-  font-size: 14px;
+  font-size: 0.875rem;
   color: var(--text-dim);
   background: var(--bg);
-  padding: 0 6px;
+  padding: 0 0.375rem;
 }
 
 .avatar-img {
   display: block;
-  width: 190px;
+  width: clamp(11.875rem, 16vw, 17rem);
   height: auto;
   filter: grayscale(20%) contrast(1.05);
   transition: filter 0.3s;
 }
 
 .pixel-avatar:hover .avatar-img {
-  filter: grayscale(0%) contrast(1.1) drop-shadow(0 0 12px rgba(0,255,65,0.3));
+  filter: grayscale(0%) contrast(1.1) drop-shadow(0 0 12px color-mix(in srgb, var(--green) 30%, transparent));
 }
 
 .floating-tags {
   display: flex;
   flex-wrap: wrap;
-  gap: 8px;
+  gap: 0.5rem;
   justify-content: center;
 }
 
 .tag {
   font-family: 'Press Start 2P', monospace;
-  font-size: 9px;
-  padding: 6px 10px;
+  font-size: 0.5625rem;
+  padding: 0.375rem 0.625rem;
   border: 1px solid var(--border);
   color: var(--text-dim);
   background: var(--bg-card);
@@ -271,35 +271,47 @@ onMounted(() => setTimeout(tick, 500));
 .tag:hover {
   border-color: var(--green);
   color: var(--green);
-  background: rgba(0,255,65,0.05);
+  background: color-mix(in srgb, var(--green) 5%, transparent);
 }
 
 /* scroll hint */
 .scroll-hint {
   position: absolute;
-  bottom: 32px;
+  bottom: calc(var(--footer-h) + 0.6rem);
   left: 50%;
   transform: translateX(-50%);
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 4px;
+  gap: 0.25rem;
   font-family: 'VT323', monospace;
-  font-size: 14px;
+  font-size: 0.875rem;
   color: var(--text-dim);
   animation: bounce 2s ease-in-out infinite;
 }
 
 @keyframes bounce {
   0%, 100% { transform: translateX(-50%) translateY(0); }
-  50% { transform: translateX(-50%) translateY(-8px); }
+  50% { transform: translateX(-50%) translateY(-0.5rem); }
 }
 
 @media (max-width: 768px) {
+  .hero {
+    min-height: 100dvh;
+    padding-top: 6rem;
+    padding-bottom: 4rem;
+  }
   .container {
     grid-template-columns: 1fr;
+    gap: 2rem;
   }
   .hero-visual {
+    order: -1;
+  }
+  .avatar-img {
+    width: clamp(8rem, 38vw, 11rem);
+  }
+  .scroll-hint {
     display: none;
   }
 }

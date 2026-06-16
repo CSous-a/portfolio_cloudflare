@@ -86,7 +86,7 @@ const cards = [
 .about-grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 40px;
+  gap: 2.5rem;
   align-items: start;
 }
 
@@ -99,14 +99,14 @@ const cards = [
 .terminal-bar {
   display: flex;
   align-items: center;
-  gap: 8px;
-  padding: 10px 16px;
+  gap: 0.5rem;
+  padding: 0.625rem 1rem;
   background: var(--bg-card2);
   border-bottom: 1px solid var(--border);
 }
 
 .dot {
-  width: 10px; height: 10px;
+  width: 0.625rem; height: 0.625rem;
   border-radius: 50%;
 }
 .dot.red    { background: #ff5f57; }
@@ -115,19 +115,19 @@ const cards = [
 
 .terminal-title {
   font-family: 'VT323', monospace;
-  font-size: 14px;
+  font-size: 0.875rem;
   color: var(--text-dim);
   margin-left: auto;
   margin-right: auto;
 }
 
 .terminal-body {
-  padding: 20px;
+  padding: 1.25rem;
 }
 
 .terminal-line {
   font-family: 'VT323', monospace;
-  font-size: 18px;
+  font-size: 1.125rem;
   line-height: 1.8;
   min-height: 1.8em;
 }
@@ -144,14 +144,14 @@ const cards = [
 .about-details {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 16px;
+  gap: 1rem;
 }
 
 .detail-card {
   display: flex;
-  gap: 12px;
+  gap: 0.75rem;
   align-items: flex-start;
-  padding: 20px;
+  padding: 1.25rem;
   background: var(--bg-card);
   border: 1px solid var(--border);
   transition: border-color 0.2s, transform 0.2s;
@@ -163,20 +163,20 @@ const cards = [
 }
 
 .card-icon {
-  font-size: 24px;
+  font-size: 1.5rem;
   flex-shrink: 0;
 }
 
 .card-title {
   font-family: 'Press Start 2P', monospace;
-  font-size: 10px;
+  font-size: 0.625rem;
   color: var(--text);
-  margin-bottom: 6px;
+  margin-bottom: 0.375rem;
 }
 
 .card-desc {
   font-family: 'VT323', monospace;
-  font-size: 16px;
+  font-size: 1rem;
   color: var(--text-dim);
   line-height: 1.4;
 }

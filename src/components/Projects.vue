@@ -56,7 +56,7 @@
 </template>
 
 <script setup>
-import { ref, computed, onMounted, nextTick } from 'vue';
+import { ref, computed, onMounted, onUnmounted, nextTick, watch } from 'vue';
 import ProjectModal from './popup_projects/ProjectModal.vue';
 
 const projects = [
@@ -161,12 +161,81 @@ const filtered = computed(() => {
 const selectedProject = ref(null);
 const scrollEl = ref(null);
 
+// Ajusta a altura do scroll de projetos para o maior número de fileiras COMPLETAS
+// que cabem no espaço disponível — nunca corta uma fileira (e portanto nenhuma
+// descrição) pela metade. Quantas fileiras aparecem depende do tamanho da tela.
+function applyRowClamp() {
+  const el = scrollEl.value;
+  if (!el) return;
+
+  // Mobile: sem clamp, a grade flui na altura natural da seção.
+  if (!window.matchMedia('(min-width: 769px)').matches) {
+    el.style.maxHeight = '';
+    return;
+  }
+
+  // Mede o espaço vertical reservado (height: 70vh do CSS) sem o clamp aplicado.
+  el.style.maxHeight = '';
+  const budget = el.clientHeight;
+
+  const grid = el.querySelector('.projects-grid');
+  const cards = grid ? Array.from(grid.querySelectorAll('.project-card')) : [];
+  if (!grid || !cards.length) return;
+
+  // Posições relativas ao topo da grade (getBoundingClientRect cancela o
+  // translate do fullpage, então funciona mesmo com a seção fora de tela).
+  const gridTop = grid.getBoundingClientRect().top;
+
+  // Agrupa os cards por fileira e guarda o "fundo" (bottom) de cada fileira,
+  // usando o card mais alto da fileira.
+  const rowBottoms = [];
+  let currentTop = null;
+  for (const card of cards) {
+    const r = card.getBoundingClientRect();
+    const top = r.top - gridTop;
+    const bottom = r.bottom - gridTop;
+    if (currentTop === null || top > currentTop + 1) {
+      rowBottoms.push(bottom);
+      currentTop = top;
+    } else {
+      const last = rowBottoms.length - 1;
+      rowBottoms[last] = Math.max(rowBottoms[last], bottom);
+    }
+  }
+
+  // Maior fileira completa que ainda cabe no budget (mínimo: 1 fileira).
+  let fit = rowBottoms[0];
+  for (const b of rowBottoms) {
+    if (b <= budget + 1) fit = b;
+    else break;
+  }
+
+  el.style.maxHeight = Math.ceil(fit) + 'px';
+}
+
+let resizeRaf = 0;
+function onResize() {
+  cancelAnimationFrame(resizeRaf);
+  resizeRaf = requestAnimationFrame(applyRowClamp);
+}
+
 onMounted(async () => {
   await nextTick();
-  const firstCard = scrollEl.value?.querySelector('.project-card');
-  if (firstCard && scrollEl.value) {
-    scrollEl.value.style.maxHeight = firstCard.offsetHeight + 'px';
-  }
+  applyRowClamp();
+  // Recalcula quando a fonte pixel termina de carregar (muda a altura dos cards).
+  window.addEventListener('load', applyRowClamp);
+  window.addEventListener('resize', onResize);
+});
+
+onUnmounted(() => {
+  window.removeEventListener('load', applyRowClamp);
+  window.removeEventListener('resize', onResize);
+});
+
+// Refiltrar muda o conjunto/altura dos cards → recalcula após o DOM atualizar.
+watch(filtered, async () => {
+  await nextTick();
+  applyRowClamp();
 });
 </script>
 
@@ -174,28 +243,28 @@ onMounted(async () => {
 .filter-bar {
   display: flex;
   flex-wrap: wrap;
-  gap: 8px;
-  margin-bottom: 12px;
+  gap: 0.5rem;
+  margin-bottom: 0.75rem;
 }
 
 .tech-bar {
-  margin-bottom: 24px;
-  padding: 10px 12px;
+  margin-bottom: 1.5rem;
+  padding: 0.625rem 0.75rem;
   border: 1px solid var(--border);
   border-left: 2px solid var(--green);
-  background: rgba(0,255,65,0.02);
+  background: color-mix(in srgb, var(--green) 2%, transparent);
 }
 
 .tech-btn {
-  font-size: 14px;
-  padding: 2px 10px;
+  font-size: 0.875rem;
+  padding: 0.125rem 0.625rem;
   opacity: 0.8;
 }
 
 .filter-btn {
   font-family: 'VT323', monospace;
-  font-size: 16px;
-  padding: 4px 14px;
+  font-size: 1rem;
+  padding: 0.25rem 0.875rem;
   background: transparent;
   border: 1px solid var(--border);
   color: var(--text-dim);
@@ -207,13 +276,13 @@ onMounted(async () => {
 .filter-btn.active {
   border-color: var(--green);
   color: var(--green);
-  background: rgba(0,255,65,0.05);
+  background: color-mix(in srgb, var(--green) 5%, transparent);
 }
 
 .projects-scroll {
   overflow-y: auto;
   overflow-x: hidden;
-  padding-right: 6px;
+  padding-right: 0.375rem;
   padding-top: 1px;
   height: 70vh;
   scrollbar-width: thin;
@@ -237,16 +306,16 @@ onMounted(async () => {
 .projects-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: 20px;
+  gap: 1.25rem;
 }
 
 .project-card {
   background: var(--bg-card);
   border: 1px solid var(--border);
-  padding: 24px;
+  padding: 1.5rem;
   display: flex;
   flex-direction: column;
-  gap: 12px;
+  gap: 0.75rem;
   transition: border-color 0.2s, transform 0.2s;
   position: relative;
   overflow: hidden;
@@ -265,7 +334,7 @@ onMounted(async () => {
 
 .project-card:hover {
   border-color: var(--border);
-  transform: translateY(-4px);
+  transform: translateY(-0.25rem);
 }
 
 .project-card:hover::before {
@@ -273,7 +342,7 @@ onMounted(async () => {
 }
 
 .project-card.featured {
-  border-color: rgba(0,255,65,0.2);
+  border-color: color-mix(in srgb, var(--green) 20%, transparent);
 }
 
 .card-header {
@@ -285,11 +354,11 @@ onMounted(async () => {
 .card-status {
   display: flex;
   align-items: center;
-  gap: 6px;
+  gap: 0.375rem;
 }
 
 .status-dot {
-  width: 8px; height: 8px;
+  width: 0.5rem; height: 0.5rem;
   border-radius: 50%;
   animation: pulse 2s ease-in-out infinite;
 }
@@ -304,7 +373,7 @@ onMounted(async () => {
 
 .status-text {
   font-family: 'VT323', monospace;
-  font-size: 14px;
+  font-size: 0.875rem;
 }
 
 .status-text.online  { color: var(--green); }
@@ -312,12 +381,12 @@ onMounted(async () => {
 
 .card-links {
   display: flex;
-  gap: 12px;
+  gap: 0.75rem;
 }
 
 .card-link {
   font-family: 'VT323', monospace;
-  font-size: 16px;
+  font-size: 1rem;
   color: var(--text-dim);
   text-decoration: none;
   transition: color 0.2s;
@@ -328,19 +397,19 @@ onMounted(async () => {
 }
 
 .card-icon {
-  font-size: 32px;
+  font-size: 2rem;
 }
 
 .card-title {
   font-family: 'Press Start 2P', monospace;
-  font-size: 10px;
+  font-size: 0.625rem;
   color: var(--text);
   line-height: 1.6;
 }
 
 .card-desc {
   font-family: 'VT323', monospace;
-  font-size: 17px;
+  font-size: 1.0625rem;
   color: var(--text-dim);
   line-height: 1.5;
   flex: 1;
@@ -349,34 +418,37 @@ onMounted(async () => {
 .card-tags {
   display: flex;
   flex-wrap: wrap;
-  gap: 6px;
+  gap: 0.375rem;
   margin-top: auto;
 }
 
 .badge {
   font-family: 'VT323', monospace;
-  font-size: 14px;
-  padding: 2px 8px;
+  font-size: 0.875rem;
+  padding: 0.125rem 0.5rem;
   border: 1px solid var(--border);
   color: var(--purple);
-  background: rgba(191,90,242,0.05);
+  background: color-mix(in srgb, var(--purple) 5%, transparent);
 }
 
 @media (max-width: 900px) {
   .projects-grid {
     grid-template-columns: repeat(2, 1fr);
   }
+}
+
+/* Mobile: sem scroll interno — a grade flui na altura natural da seção */
+@media (max-width: 768px) {
   .projects-scroll {
-    max-height: 688px;
+    height: auto;
+    max-height: none !important;
+    overflow: visible;
   }
 }
 
 @media (max-width: 580px) {
   .projects-grid {
     grid-template-columns: 1fr;
-  }
-  .projects-scroll {
-    max-height: 344px;
   }
 }
 </style>

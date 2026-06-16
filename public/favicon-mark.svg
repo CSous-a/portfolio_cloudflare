@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="64" height="64">
+  <!-- Logo [CS]: colchetes verdes + CS claro, fundo transparente -->
+  <text x="32" y="34" text-anchor="middle" dominant-baseline="central"
+        font-family="'Courier New', ui-monospace, monospace" font-weight="700"
+        font-size="30" letter-spacing="-3">
+    <tspan fill="#00ff41">[</tspan><tspan fill="#e0e0e0">CS</tspan><tspan fill="#00ff41">]</tspan>
+  </text>
+</svg>

@@ -197,10 +197,12 @@ function onKey(e) {
 
 onMounted(() => {
   document.body.dataset.modalOpen = 'true';
+  document.body.style.overflow = 'hidden';
   window.addEventListener('keydown', onKey);
 });
 onUnmounted(() => {
   delete document.body.dataset.modalOpen;
+  document.body.style.overflow = '';
   window.removeEventListener('keydown', onKey);
 });
 </script>
@@ -226,29 +228,28 @@ onUnmounted(() => {
   position: relative;
   background: var(--bg-card);
   border: 1px solid var(--border);
-  width: 90%;
-  max-width: 960px;
-  height: 88vh;
+  width: min(92vw, 62rem);
+  height: 88dvh;
   overflow: hidden;
   animation: slideUp 0.25s ease;
 }
 
 @keyframes slideUp {
-  from { transform: translateY(24px); opacity: 0; }
+  from { transform: translateY(1.5rem); opacity: 0; }
   to   { transform: translateY(0);    opacity: 1; }
 }
 
 .modal-close {
   position: absolute;
-  top: 16px;
-  right: 16px;
+  top: 1rem;
+  right: 1rem;
   background: none;
   border: 1px solid var(--border);
   color: var(--text-dim);
   font-family: 'VT323', monospace;
-  font-size: 18px;
-  width: 32px;
-  height: 32px;
+  font-size: 1.125rem;
+  width: 2rem;
+  height: 2rem;
   cursor: pointer;
   z-index: 10;
   transition: border-color 0.2s, color 0.2s;
@@ -265,8 +266,8 @@ onUnmounted(() => {
 .modal-left {
   display: flex;
   flex-direction: column;
-  gap: 14px;
-  padding: 28px 20px 28px 28px;
+  gap: 0.875rem;
+  padding: 1.75rem 1.25rem 1.75rem 1.75rem;
   border-right: 1px solid var(--border);
   overflow: hidden;
 }
@@ -283,9 +284,9 @@ onUnmounted(() => {
 
 .expand-hint {
   position: absolute;
-  bottom: 8px;
-  right: 10px;
-  font-size: 18px;
+  bottom: 0.5rem;
+  right: 0.625rem;
+  font-size: 1.125rem;
   color: rgba(255,255,255,0.5);
   pointer-events: none;
   opacity: 0;
@@ -313,7 +314,7 @@ onUnmounted(() => {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 12px;
+  gap: 0.75rem;
   cursor: default;
   background: repeating-linear-gradient(
     45deg,
@@ -324,10 +325,10 @@ onUnmounted(() => {
   );
 }
 
-.placeholder-icon  { font-size: 48px; }
+.placeholder-icon  { font-size: 3rem; }
 .placeholder-label {
   font-family: 'VT323', monospace;
-  font-size: 14px;
+  font-size: 0.875rem;
   color: var(--text-dim);
 }
 
@@ -343,18 +344,18 @@ onUnmounted(() => {
   border: 1px solid var(--border);
   color: var(--text-dim);
   font-family: 'VT323', monospace;
-  font-size: 16px;
-  padding: 2px 10px;
+  font-size: 1rem;
+  padding: 0.125rem 0.625rem;
   cursor: pointer;
   transition: border-color 0.2s, color 0.2s;
 }
 .nav-btn:hover { border-color: var(--green); color: var(--green); }
 
-.carousel-dots { display: flex; gap: 8px; }
+.carousel-dots { display: flex; gap: 0.5rem; }
 
 .carousel-dot {
-  width: 8px;
-  height: 8px;
+  width: 0.5rem;
+  height: 0.5rem;
   border: 1px solid var(--border);
   cursor: pointer;
   transition: background 0.2s, border-color 0.2s;
@@ -367,63 +368,63 @@ onUnmounted(() => {
 .m-tags {
   display: flex;
   flex-wrap: wrap;
-  gap: 6px;
+  gap: 0.375rem;
   flex-shrink: 0;
   overflow-y: auto;
-  max-height: 88px;
+  max-height: 5.5rem;
   scrollbar-width: thin;
   scrollbar-color: var(--border) transparent;
 }
 
 .badge {
   font-family: 'VT323', monospace;
-  font-size: 14px;
-  padding: 2px 8px;
+  font-size: 0.875rem;
+  padding: 0.125rem 0.5rem;
   border: 1px solid var(--border);
   color: var(--purple);
-  background: rgba(191, 90, 242, 0.05);
+  background: color-mix(in srgb, var(--purple) 5%, transparent);
   height: fit-content;
 }
 
 .modal-links {
   display: flex;
-  gap: 12px;
+  gap: 0.75rem;
   flex-wrap: wrap;
   flex-shrink: 0;
-  margin-top: 22px;
+  margin-top: 1.375rem;
 }
 
 .pixel-btn {
   font-family: 'VT323', monospace;
-  font-size: 17px;
-  padding: 4px 16px;
+  font-size: 1.0625rem;
+  padding: 0.25rem 1rem;
   border: 1px solid var(--green);
   color: var(--green);
-  background: rgba(0, 255, 65, 0.05);
+  background: color-mix(in srgb, var(--green) 5%, transparent);
   text-decoration: none;
   cursor: pointer;
   transition: background 0.2s, box-shadow 0.2s;
 }
 .pixel-btn:hover {
-  background: rgba(0, 255, 65, 0.12);
-  box-shadow: 0 0 8px rgba(0, 255, 65, 0.3);
+  background: color-mix(in srgb, var(--green) 12%, transparent);
+  box-shadow: 0 0 8px color-mix(in srgb, var(--green) 30%, transparent);
 }
 .pixel-btn.secondary {
   border-color: var(--cyan);
   color: var(--cyan);
-  background: rgba(0, 255, 255, 0.05);
+  background: color-mix(in srgb, var(--cyan) 5%, transparent);
 }
 .pixel-btn.secondary:hover {
-  background: rgba(0, 255, 255, 0.12);
-  box-shadow: 0 0 8px rgba(0, 255, 255, 0.3);
+  background: color-mix(in srgb, var(--cyan) 12%, transparent);
+  box-shadow: 0 0 8px color-mix(in srgb, var(--cyan) 30%, transparent);
 }
 
 /* ── Lado direito ── */
 .modal-right {
   display: flex;
   flex-direction: column;
-  gap: 20px;
-  padding: 32px 36px 32px 28px;
+  gap: 1.25rem;
+  padding: 2rem 2.25rem 2rem 1.75rem;
   height: 100%;
   overflow: hidden;
 }
@@ -431,24 +432,24 @@ onUnmounted(() => {
 .modal-header {
   display: flex;
   align-items: flex-start;
-  gap: 16px;
+  gap: 1rem;
   flex-shrink: 0;
 }
 
-.m-icon { font-size: 36px; }
+.m-icon { font-size: 2.25rem; }
 
-.m-title-group { display: flex; flex-direction: column; gap: 6px; }
+.m-title-group { display: flex; flex-direction: column; gap: 0.375rem; }
 
 .m-title {
   font-family: 'Press Start 2P', monospace;
-  font-size: 12px;
+  font-size: 0.75rem;
   color: var(--text);
   line-height: 1.5;
 }
 
 .m-status {
   font-family: 'VT323', monospace;
-  font-size: 16px;
+  font-size: 1rem;
 }
 .m-status.online  { color: var(--green); }
 .m-status.offline { color: #ff5f57; }
@@ -456,24 +457,24 @@ onUnmounted(() => {
 .m-detail {
   flex: 1;
   border-top: 1px solid var(--border);
-  padding-top: 20px;
+  padding-top: 1.25rem;
   overflow-y: auto;
   scrollbar-width: thin;
   scrollbar-color: var(--border) transparent;
   display: flex;
   flex-direction: column;
-  gap: 14px;
+  gap: 0.875rem;
 }
 
 .slide-caption-title {
   font-family: 'VT323', monospace;
-  font-size: 18px;
+  font-size: 1.125rem;
   color: var(--cyan);
 }
 
 .slide-caption-desc {
   font-family: 'VT323', monospace;
-  font-size: 18px;
+  font-size: 1.125rem;
   color: var(--text-dim);
   line-height: 1.6;
 }
@@ -502,15 +503,15 @@ onUnmounted(() => {
 
 .fs-close {
   position: absolute;
-  top: 20px;
-  right: 20px;
+  top: 1.25rem;
+  right: 1.25rem;
   background: none;
   border: 1px solid rgba(255,255,255,0.3);
   color: rgba(255,255,255,0.7);
   font-family: 'VT323', monospace;
-  font-size: 20px;
-  width: 36px;
-  height: 36px;
+  font-size: 1.25rem;
+  width: 2.25rem;
+  height: 2.25rem;
   cursor: pointer;
   transition: border-color 0.2s, color 0.2s;
   z-index: 10;
@@ -519,8 +520,8 @@ onUnmounted(() => {
 
 @media (max-width: 700px) {
   .modal {
-    height: 95vh;
-    width: 95%;
+    height: 92dvh;
+    width: 95vw;
   }
   .modal-grid {
     grid-template-columns: 1fr;
@@ -530,12 +531,12 @@ onUnmounted(() => {
   .modal-left {
     border-right: none;
     border-bottom: 1px solid var(--border);
-    padding: 24px;
+    padding: 1.5rem;
     overflow: visible;
-    min-height: 60vh;
+    min-height: 55dvh;
   }
   .modal-right {
-    padding: 24px;
+    padding: 1.5rem;
     height: auto;
     overflow: visible;
   }
