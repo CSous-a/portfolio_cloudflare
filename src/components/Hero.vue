@@ -3,7 +3,7 @@
     <div class="container">
       <div class="hero-content">
         <p class="hero-greeting">
-          <span class="prompt">$</span> Jr Developer
+          <span class="prompt">$</span> Software Developer - Backend
         </p>
         <h1 class="hero-name">
           <span class="name-line">Caio</span>
@@ -277,7 +277,7 @@ onMounted(() => setTimeout(tick, 500));
 /* scroll hint */
 .scroll-hint {
   position: absolute;
-  bottom: 2rem;
+  bottom: calc(var(--footer-h) + 0.6rem);
   left: 50%;
   transform: translateX(-50%);
   display: flex;

@@ -197,10 +197,12 @@ function onKey(e) {
 
 onMounted(() => {
   document.body.dataset.modalOpen = 'true';
+  document.body.style.overflow = 'hidden';
   window.addEventListener('keydown', onKey);
 });
 onUnmounted(() => {
   delete document.body.dataset.modalOpen;
+  document.body.style.overflow = '';
   window.removeEventListener('keydown', onKey);
 });
 </script>

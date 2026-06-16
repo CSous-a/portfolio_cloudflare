@@ -14,6 +14,7 @@
   --text-dim: #666666;
   --pixel-shadow: 4px 4px 0px #000;
   --pixel-border: 2px solid var(--green);
+  --footer-h: 3.25rem;
 }
 
 *, *::before, *::after {
@@ -88,6 +89,13 @@ a:hover {
   height: 100vh;
   overflow: hidden;
   padding: 5rem 0;
+}
+
+/* Desktop: reserva espaço no rodapé de cada seção para a faixa fixa do footer. */
+@media (min-width: 769px) {
+  .section {
+    padding-bottom: var(--footer-h);
+  }
 }
 
 .container {

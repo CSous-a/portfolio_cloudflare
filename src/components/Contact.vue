@@ -68,19 +68,6 @@
         </form>
       </div>
     </div>
-
-    <footer class="footer">
-      <div class="container footer-inner">
-        <span class="footer-logo">
-          <span class="bracket">[</span>CS<span class="bracket">]</span>
-        </span>
-        <span class="footer-text">
-          Built with <span class="accent">Astro</span> + <span class="accent">Vue.js</span>
-          &nbsp;·&nbsp; {{ new Date().getFullYear() }}
-        </span>
-        <span class="footer-copy">Feito com ☕ e pixels</span>
-      </div>
-    </footer>
   </section>
 </template>
 
@@ -257,47 +244,6 @@ async function send() {
   font-family: 'VT323', monospace;
   font-size: 1.125rem;
   color: #ff4444;
-}
-
-/* Footer */
-.footer {
-  margin-top: 5rem;
-  padding: 1.5rem 0;
-  border-top: 1px solid var(--border);
-}
-
-.footer-inner {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  flex-wrap: wrap;
-  gap: 0.75rem;
-}
-
-.footer-logo {
-  font-family: 'Press Start 2P', monospace;
-  font-size: 0.875rem;
-  color: var(--text-dim);
-}
-
-.bracket {
-  color: var(--green);
-}
-
-.footer-text {
-  font-family: 'VT323', monospace;
-  font-size: 1.125rem;
-  color: var(--text-dim);
-}
-
-.footer-text .accent {
-  color: var(--green);
-}
-
-.footer-copy {
-  font-family: 'VT323', monospace;
-  font-size: 1rem;
-  color: var(--text-dim);
 }
 
 @media (max-width: 768px) {

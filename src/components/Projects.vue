@@ -56,7 +56,7 @@
 </template>
 
 <script setup>
-import { ref, computed, onMounted, nextTick } from 'vue';
+import { ref, computed, onMounted, onUnmounted, nextTick, watch } from 'vue';
 import ProjectModal from './popup_projects/ProjectModal.vue';
 
 const projects = [
@@ -161,15 +161,81 @@ const filtered = computed(() => {
 const selectedProject = ref(null);
 const scrollEl = ref(null);
 
+// Ajusta a altura do scroll de projetos para o maior número de fileiras COMPLETAS
+// que cabem no espaço disponível — nunca corta uma fileira (e portanto nenhuma
+// descrição) pela metade. Quantas fileiras aparecem depende do tamanho da tela.
+function applyRowClamp() {
+  const el = scrollEl.value;
+  if (!el) return;
+
+  // Mobile: sem clamp, a grade flui na altura natural da seção.
+  if (!window.matchMedia('(min-width: 769px)').matches) {
+    el.style.maxHeight = '';
+    return;
+  }
+
+  // Mede o espaço vertical reservado (height: 70vh do CSS) sem o clamp aplicado.
+  el.style.maxHeight = '';
+  const budget = el.clientHeight;
+
+  const grid = el.querySelector('.projects-grid');
+  const cards = grid ? Array.from(grid.querySelectorAll('.project-card')) : [];
+  if (!grid || !cards.length) return;
+
+  // Posições relativas ao topo da grade (getBoundingClientRect cancela o
+  // translate do fullpage, então funciona mesmo com a seção fora de tela).
+  const gridTop = grid.getBoundingClientRect().top;
+
+  // Agrupa os cards por fileira e guarda o "fundo" (bottom) de cada fileira,
+  // usando o card mais alto da fileira.
+  const rowBottoms = [];
+  let currentTop = null;
+  for (const card of cards) {
+    const r = card.getBoundingClientRect();
+    const top = r.top - gridTop;
+    const bottom = r.bottom - gridTop;
+    if (currentTop === null || top > currentTop + 1) {
+      rowBottoms.push(bottom);
+      currentTop = top;
+    } else {
+      const last = rowBottoms.length - 1;
+      rowBottoms[last] = Math.max(rowBottoms[last], bottom);
+    }
+  }
+
+  // Maior fileira completa que ainda cabe no budget (mínimo: 1 fileira).
+  let fit = rowBottoms[0];
+  for (const b of rowBottoms) {
+    if (b <= budget + 1) fit = b;
+    else break;
+  }
+
+  el.style.maxHeight = Math.ceil(fit) + 'px';
+}
+
+let resizeRaf = 0;
+function onResize() {
+  cancelAnimationFrame(resizeRaf);
+  resizeRaf = requestAnimationFrame(applyRowClamp);
+}
+
 onMounted(async () => {
   await nextTick();
-  // Limita a altura do scroll interno a um card só no desktop (efeito fullpage).
-  // No mobile a grade flui na altura natural da seção.
-  if (!window.matchMedia('(min-width: 769px)').matches) return;
-  const firstCard = scrollEl.value?.querySelector('.project-card');
-  if (firstCard && scrollEl.value) {
-    scrollEl.value.style.maxHeight = firstCard.offsetHeight + 'px';
-  }
+  applyRowClamp();
+  // Recalcula quando a fonte pixel termina de carregar (muda a altura dos cards).
+  window.addEventListener('load', applyRowClamp);
+  window.addEventListener('resize', onResize);
+});
+
+onUnmounted(() => {
+  window.removeEventListener('load', applyRowClamp);
+  window.removeEventListener('resize', onResize);
+});
+
+// Refiltrar muda o conjunto/altura dos cards → recalcula após o DOM atualizar.
+watch(filtered, async () => {
+  await nextTick();
+  applyRowClamp();
 });
 </script>
 
