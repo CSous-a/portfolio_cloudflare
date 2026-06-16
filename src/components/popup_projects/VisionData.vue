@@ -30,12 +30,12 @@ defineExpose({ slides })
 .detail {
   display: flex;
   flex-direction: column;
-  gap: 16px;
+  gap: 1rem;
 }
 
 .detail-desc {
   font-family: 'VT323', monospace;
-  font-size: 18px;
+  font-size: 1.125rem;
   color: var(--text-dim);
   line-height: 1.6;
 }
@@ -44,14 +44,14 @@ defineExpose({ slides })
   list-style: none;
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: 0.625rem;
 }
 
 .detail-features li {
   font-family: 'VT323', monospace;
-  font-size: 17px;
+  font-size: 1.0625rem;
   color: var(--text);
-  padding-left: 16px;
+  padding-left: 1rem;
   position: relative;
   line-height: 1.4;
 }
