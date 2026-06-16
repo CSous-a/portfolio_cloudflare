@@ -54,7 +54,7 @@ const footerLinks = [
   z-index: 90;
   padding: 0.7rem 0;
   border-top: 1px solid var(--border);
-  background: rgba(17, 17, 17, 0.95);
+  background: color-mix(in srgb, var(--bg-card) 95%, transparent);
   backdrop-filter: blur(8px);
 }
 
@@ -117,7 +117,7 @@ const footerLinks = [
 .footer-social-link:hover {
   border-color: var(--green);
   color: var(--green);
-  background: rgba(0, 255, 65, 0.05);
+  background: color-mix(in srgb, var(--green) 5%, transparent);
 }
 
 .footer-social-icon {

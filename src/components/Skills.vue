@@ -164,10 +164,10 @@ const groups = [
   transition: width 1s ease;
 }
 
-.skill-fill.green  { background: var(--green);  box-shadow: 0 0 8px rgba(0,255,65,0.5); }
-.skill-fill.cyan   { background: var(--cyan);   box-shadow: 0 0 8px rgba(0,229,255,0.5); }
-.skill-fill.purple { background: var(--purple); box-shadow: 0 0 8px rgba(191,90,242,0.5); }
-.skill-fill.yellow { background: var(--yellow); box-shadow: 0 0 8px rgba(255,214,10,0.5); }
+.skill-fill.green  { background: var(--green);  box-shadow: 0 0 8px color-mix(in srgb, var(--green) 50%, transparent); }
+.skill-fill.cyan   { background: var(--cyan);   box-shadow: 0 0 8px color-mix(in srgb, var(--cyan) 50%, transparent); }
+.skill-fill.purple { background: var(--purple); box-shadow: 0 0 8px color-mix(in srgb, var(--purple) 50%, transparent); }
+.skill-fill.yellow { background: var(--yellow); box-shadow: 0 0 8px color-mix(in srgb, var(--yellow) 50%, transparent); }
 
 /* pixelated bar segments */
 .skill-fill::after {
@@ -209,7 +209,7 @@ const groups = [
 .tool-badge:hover {
   border-color: var(--cyan);
   color: var(--cyan);
-  background: rgba(0,229,255,0.05);
+  background: color-mix(in srgb, var(--cyan) 5%, transparent);
 }
 
 @media (max-width: 640px) {

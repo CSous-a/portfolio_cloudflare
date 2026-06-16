@@ -252,7 +252,7 @@ watch(filtered, async () => {
   padding: 0.625rem 0.75rem;
   border: 1px solid var(--border);
   border-left: 2px solid var(--green);
-  background: rgba(0,255,65,0.02);
+  background: color-mix(in srgb, var(--green) 2%, transparent);
 }
 
 .tech-btn {
@@ -276,7 +276,7 @@ watch(filtered, async () => {
 .filter-btn.active {
   border-color: var(--green);
   color: var(--green);
-  background: rgba(0,255,65,0.05);
+  background: color-mix(in srgb, var(--green) 5%, transparent);
 }
 
 .projects-scroll {
@@ -342,7 +342,7 @@ watch(filtered, async () => {
 }
 
 .project-card.featured {
-  border-color: rgba(0,255,65,0.2);
+  border-color: color-mix(in srgb, var(--green) 20%, transparent);
 }
 
 .card-header {
@@ -428,7 +428,7 @@ watch(filtered, async () => {
   padding: 0.125rem 0.5rem;
   border: 1px solid var(--border);
   color: var(--purple);
-  background: rgba(191,90,242,0.05);
+  background: color-mix(in srgb, var(--purple) 5%, transparent);
 }
 
 @media (max-width: 900px) {

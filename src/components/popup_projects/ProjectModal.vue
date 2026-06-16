@@ -382,7 +382,7 @@ onUnmounted(() => {
   padding: 0.125rem 0.5rem;
   border: 1px solid var(--border);
   color: var(--purple);
-  background: rgba(191, 90, 242, 0.05);
+  background: color-mix(in srgb, var(--purple) 5%, transparent);
   height: fit-content;
 }
 
@@ -400,23 +400,23 @@ onUnmounted(() => {
   padding: 0.25rem 1rem;
   border: 1px solid var(--green);
   color: var(--green);
-  background: rgba(0, 255, 65, 0.05);
+  background: color-mix(in srgb, var(--green) 5%, transparent);
   text-decoration: none;
   cursor: pointer;
   transition: background 0.2s, box-shadow 0.2s;
 }
 .pixel-btn:hover {
-  background: rgba(0, 255, 65, 0.12);
-  box-shadow: 0 0 8px rgba(0, 255, 65, 0.3);
+  background: color-mix(in srgb, var(--green) 12%, transparent);
+  box-shadow: 0 0 8px color-mix(in srgb, var(--green) 30%, transparent);
 }
 .pixel-btn.secondary {
   border-color: var(--cyan);
   color: var(--cyan);
-  background: rgba(0, 255, 255, 0.05);
+  background: color-mix(in srgb, var(--cyan) 5%, transparent);
 }
 .pixel-btn.secondary:hover {
-  background: rgba(0, 255, 255, 0.12);
-  box-shadow: 0 0 8px rgba(0, 255, 255, 0.3);
+  background: color-mix(in srgb, var(--cyan) 12%, transparent);
+  box-shadow: 0 0 8px color-mix(in srgb, var(--cyan) 30%, transparent);
 }
 
 /* ── Lado direito ── */

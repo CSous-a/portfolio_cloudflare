@@ -15,6 +15,13 @@ const { title = 'Caio Sousa — Portfólio', description = 'Portfólio de desenv
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="description" content={description} />
     <title>{title}</title>
+    <script is:inline>
+      // Aplica o tema salvo antes da pintura (evita flash). 'dark' é o padrão (sem atributo).
+      try {
+        const t = localStorage.getItem('theme');
+        if (t && t !== 'dark') document.documentElement.dataset.theme = t;
+      } catch (e) {}
+    </script>
   </head>
   <body>
     <slot />

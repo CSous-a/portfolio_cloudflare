@@ -141,7 +141,7 @@ onMounted(() => setTimeout(tick, 500));
 
 .accent {
   color: var(--green);
-  text-shadow: 0 0 20px rgba(0,255,65,0.4);
+  text-shadow: 0 0 20px color-mix(in srgb, var(--green) 40%, transparent);
 }
 
 .hero-role {
@@ -248,7 +248,7 @@ onMounted(() => setTimeout(tick, 500));
 }
 
 .pixel-avatar:hover .avatar-img {
-  filter: grayscale(0%) contrast(1.1) drop-shadow(0 0 12px rgba(0,255,65,0.3));
+  filter: grayscale(0%) contrast(1.1) drop-shadow(0 0 12px color-mix(in srgb, var(--green) 30%, transparent));
 }
 
 .floating-tags {
@@ -271,7 +271,7 @@ onMounted(() => setTimeout(tick, 500));
 .tag:hover {
   border-color: var(--green);
   color: var(--green);
-  background: rgba(0,255,65,0.05);
+  background: color-mix(in srgb, var(--green) 5%, transparent);
 }
 
 /* scroll hint */
