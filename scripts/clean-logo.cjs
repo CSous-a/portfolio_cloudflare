@@ -1,5 +1,9 @@
+// Gera tauri_planner_display.svg a partir do logo original, removendo as
+// "rebarbas" do auto-trace (o contorno tracejado ao redor do ícone).
+// Cada camada de cor (path) tem dezenas de sub-formas minúsculas espalhadas na
+// borda; abaixo do threshold de área são descartadas, mantendo as formas reais.
+// Rodar:  node scripts/clean-logo.cjs
 const fs = require('fs');
-const { Resvg } = require('@resvg/resvg-js');
 
 // Threshold de ÁREA do bounding-box por path. Sub-formas menores = rebarbas → removidas.
 const THRESH = { path0: 0, path1: 0, path2: 70, path3: 55, path4: 50 };
@@ -27,8 +31,5 @@ const cleaned = src.replace(
 );
 
 fs.writeFileSync(OUT, cleaned);
-
-const r = new Resvg(cleaned, { background: '#0d0d0d', fitTo: { mode: 'width', value: 600 } });
-fs.writeFileSync('/tmp/display.png', r.render().asPng());
 console.log('thresholds:', JSON.stringify(THRESH));
-console.log('escrito', OUT, '+ /tmp/display.png');
+console.log('escrito', OUT);
