@@ -83,7 +83,7 @@
                 :href="project.download"
                 download
                 class="pixel-btn"
-              >↓ instalador (x64)</a>
+              >↓ {{ ui.installer }}</a>
               <a
                 v-if="project.repo"
                 :href="project.repo"
@@ -152,6 +152,12 @@
 
 <script setup>
 import { ref, computed, watch, reactive, defineAsyncComponent, onMounted, onUnmounted } from 'vue';
+import { tr } from '../../i18n/locale.js';
+
+const ui = tr({
+  pt: { installer: 'instalador (x64)' },
+  en: { installer: 'installer (x64)' },
+});
 
 const props = defineProps({ project: Object });
 const emit = defineEmits(['close']);

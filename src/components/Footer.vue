@@ -6,12 +6,12 @@
           <span class="bracket">[</span>CS<span class="bracket">]</span>
         </span>
         <span class="footer-text">
-          Built with <span class="accent">Astro</span> + <span class="accent">Vue.js</span>
+          {{ t.builtWith }} <span class="accent">Astro</span> + <span class="accent">Vue.js</span>
           &nbsp;·&nbsp; {{ year }}
         </span>
       </div>
 
-      <nav class="footer-social" aria-label="Outros métodos de contato">
+      <nav class="footer-social" :aria-label="t.contactAria">
         <a
           v-for="item in footerLinks"
           :key="item.label"
@@ -27,12 +27,19 @@
         <!-- 👉 Para adicionar mais métodos de contato, inclua um item em `footerLinks` -->
       </nav>
 
-      <span class="footer-copy">Feito com ☕ e pixels</span>
+      <span class="footer-copy">{{ t.copy }}</span>
     </div>
   </footer>
 </template>
 
 <script setup>
+import { tr } from '../i18n/locale.js';
+
+const t = tr({
+  pt: { builtWith: 'Feito com', contactAria: 'Outros métodos de contato', copy: 'Feito com ☕ e pixels' },
+  en: { builtWith: 'Built with', contactAria: 'Other contact methods', copy: 'Made with ☕ and pixels' },
+});
+
 const year = new Date().getFullYear();
 
 // Métodos de contato rápidos exibidos na faixa do rodapé.

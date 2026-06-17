@@ -3,7 +3,7 @@
     <div class="container">
       <div class="hero-content">
         <p class="hero-greeting">
-          <span class="prompt">$</span> Software Developer - Backend
+          <span class="prompt">$</span> {{ t.greeting }}
         </p>
         <h1 class="hero-name">
           <span class="name-line">Caio</span>
@@ -15,12 +15,11 @@
           <span class="cursor" :class="{ blink: !typing }">_</span>
         </div>
         <p class="hero-desc">
-          Desenvolvedor apaixonado por construir experiências digitais elegantes,
-          escaláveis e cheias de personalidade.
+          {{ t.desc }}
         </p>
         <div class="hero-actions">
-          <a href="#projects" class="pixel-btn">Ver projetos</a>
-          <a href="#contact" class="pixel-btn secondary">Contato</a>
+          <a href="#projects" class="pixel-btn">{{ t.ctaProjects }}</a>
+          <a href="#contact" class="pixel-btn secondary">{{ t.ctaContact }}</a>
         </div>
         <div class="hero-stats">
           <div class="stat" v-for="s in stats" :key="s.label">
@@ -39,32 +38,64 @@
       </div>
     </div>
     <div class="scroll-hint">
-      <span>rolar</span>
+      <span>{{ t.scroll }}</span>
       <span class="arrow">▼</span>
     </div>
   </section>
 </template>
 
 <script setup>
-import { ref, onMounted } from 'vue';
+import { ref, computed, onMounted } from 'vue';
+import { tr } from '../i18n/locale.js';
 
-const roles = [
-  'Apaixonado por Java',
-  'Arquiteto de APIs REST',
-  'Solucionador de Problemas',
-  'Adepto de SpringBoot',
-  'Amigo do Ágil',
-  'Aprendizado Contínuo',
-  'Especialista em Banco de Dados',
-  'Entusiasta de Rust',
-];
+const t = tr({
+  pt: {
+    greeting: 'Software Developer - Backend',
+    desc: 'Desenvolvedor apaixonado por construir experiências digitais elegantes, escaláveis e cheias de personalidade.',
+    ctaProjects: 'Ver projetos',
+    ctaContact: 'Contato',
+    scroll: 'rolar',
+    roles: [
+      'Apaixonado por Java',
+      'Arquiteto de APIs REST',
+      'Solucionador de Problemas',
+      'Adepto de SpringBoot',
+      'Amigo do Ágil',
+      'Aprendizado Contínuo',
+      'Especialista em Banco de Dados',
+      'Entusiasta de Rust',
+    ],
+    stats: [
+      { value: '1', label: 'ano de exp.' },
+      { value: '5+', label: 'projetos' },
+      { value: '∞', label: 'café' },
+    ],
+  },
+  en: {
+    greeting: 'Software Developer - Backend',
+    desc: 'Developer passionate about building elegant, scalable digital experiences full of personality.',
+    ctaProjects: 'View projects',
+    ctaContact: 'Contact',
+    scroll: 'scroll',
+    roles: [
+      'In love with Java',
+      'REST API Architect',
+      'Problem Solver',
+      'SpringBoot Adept',
+      'Agile Friend',
+      'Continuous Learning',
+      'Database Specialist',
+      'Rust Enthusiast',
+    ],
+    stats: [
+      { value: '1', label: 'year of exp.' },
+      { value: '5+', label: 'projects' },
+      { value: '∞', label: 'coffee' },
+    ],
+  },
+});
 
-const stats = [
-  { value: '1', label: 'ano de exp.' },
-  { value: '5+', label: 'projetos' },
-  { value: '∞', label: 'café' },
-];
-
+const stats = computed(() => t.value.stats);
 const tags = ['Java','Python','Rust','Node','JavaScript','SQL','NOSQL', 'Docker','Git', 'Linux Server'];
 
 const displayedRole = ref('');
@@ -74,6 +105,9 @@ let charIndex = 0;
 let deleting = false;
 
 function tick() {
+  const roles = t.value.roles;
+  // Idioma pode mudar no meio da digitação — mantém o índice dentro do array.
+  if (roleIndex >= roles.length) roleIndex = 0;
   const current = roles[roleIndex];
   if (!deleting) {
     displayedRole.value = current.slice(0, ++charIndex);

@@ -1,7 +1,7 @@
 <template>
   <section id="projects" class="section">
     <div class="container">
-      <h2 class="section-title">projetos</h2>
+      <h2 class="section-title">{{ ui.title }}</h2>
       <div class="filter-bar">
         <button
           v-for="cat in categoryList"
@@ -9,7 +9,7 @@
           class="filter-btn"
           :class="{ active: activeCategory === cat }"
           @click="selectCategory(cat)"
-        >{{ cat }}</button>
+        >{{ catLabel(cat) }}</button>
       </div>
       <div class="filter-bar tech-bar" v-if="activeCategory !== 'todos'">
         <button
@@ -35,9 +35,9 @@
                 <span class="status-text" :class="project.status">{{ project.status }}</span>
               </div>
               <div class="card-links">
-                <a v-if="project.demo" :href="project.demo" target="_blank" rel="noopener noreferrer" class="card-link">demo</a>
-                <a v-if="project.download" :href="project.download" download class="card-link" @click.stop>download</a>
-                <a v-if="project.repo" :href="project.repo" target="_blank" rel="noopener noreferrer" class="card-link">código</a>
+                <a v-if="project.demo" :href="project.demo" target="_blank" rel="noopener noreferrer" class="card-link">{{ ui.linkDemo }}</a>
+                <a v-if="project.download" :href="project.download" download class="card-link" @click.stop>{{ ui.linkDownload }}</a>
+                <a v-if="project.repo" :href="project.repo" target="_blank" rel="noopener noreferrer" class="card-link">{{ ui.linkCode }}</a>
               </div>
             </div>
             <div class="card-icon">
@@ -61,14 +61,41 @@
 
 <script setup>
 import { ref, computed, onMounted, onUnmounted, nextTick, watch } from 'vue';
+import { tr, locale } from '../i18n/locale.js';
 import ProjectModal from './popup_projects/ProjectModal.vue';
 
-const projects = [
+const ui = tr({
+  pt: { title: 'projetos', all: 'todos', linkDemo: 'demo', linkDownload: 'download', linkCode: 'código' },
+  en: { title: 'projects', all: 'all', linkDemo: 'demo', linkDownload: 'download', linkCode: 'code' },
+});
+
+// Descrições curtas dos cards, por idioma (chaveadas pelo id do projeto).
+const descriptions = {
+  pt: {
+    geotrack: 'API Rest de visualização de dados geoespaciais com mapas interativos e análises de rotas. Feito em parceria com a empresa ITO1',
+    bitaiga: 'Plataforma de Business Intelligence integrada ao Taiga para monitoramento de métricas, desempenho de equipes e acompanhamento estratégico de projetos por meio de dashboards interativos.',
+    agileassessment: 'Plataforma de avaliação 360° baseada na Escala Likert para acompanhamento de desempenho, feedbacks internos e evolução de equipes Scrum.',
+    dataflow: 'Plataforma de configuração e gerenciamento de pipelines de dados, permitindo mapeamento de metadados, regras de negócio e análise operacional.',
+    geodoc: 'Plataforma de gestão e controle documental para centralização, organização e acompanhamento de documentos digitais em ambiente corporativo.',
+    tauriplanner: 'Aplicativo desktop para gestão de projetos por etapas com peso e progresso automático, quadro Kanban, linha do tempo (Gantt), templates reutilizáveis e cadastro de clientes com validação de CPF/CNPJ.',
+    visiondata: 'Plataforma de Business Intelligence para consolidação de tickets de suporte, busca inteligente de soluções recorrentes e geração de insights estratégicos e preditivos.',
+  },
+  en: {
+    geotrack: 'REST API for geospatial data visualization with interactive maps and route analysis. Built in partnership with the company ITO1.',
+    bitaiga: 'Business Intelligence platform integrated with Taiga for tracking metrics, team performance and strategic project monitoring through interactive dashboards.',
+    agileassessment: '360° assessment platform based on the Likert Scale for performance tracking, internal feedback and the evolution of Scrum teams.',
+    dataflow: 'Platform for configuring and managing data pipelines, enabling metadata mapping, business rules and operational analysis.',
+    geodoc: 'Document management and control platform to centralize, organize and track digital documents in corporate environments.',
+    tauriplanner: 'Desktop app for step-based project management with weighting and automatic progress, a Kanban board, timeline (Gantt), reusable templates and client registration with CPF/CNPJ validation.',
+    visiondata: 'Business Intelligence platform to consolidate support tickets, smart search for recurring solutions and the generation of strategic, predictive insights.',
+  },
+};
+
+const baseProjects = [
   {
     id: 'geotrack',
     icon: '🗺️',
     title: 'GeoTrack',
-    desc: 'API Rest de visualização de dados geoespaciais com mapas interativos e análises de rotas. Feito em parceria com a empresa ITO1',
     tags: ['Vue.js', 'PostGIS', 'Springboot', 'Java', 'Oracle', 'PostgreSQL'],
     status: 'offline',
     featured: true,
@@ -79,7 +106,6 @@ const projects = [
     id: 'bitaiga',
     icon: '📊',
     title: 'BI Taiga',
-    desc: 'Plataforma de Business Intelligence integrada ao Taiga para monitoramento de métricas, desempenho de equipes e acompanhamento estratégico de projetos por meio de dashboards interativos.',
     tags: ['Vue.js', 'Vuetify', 'PostgreSQL', 'Java', 'SonarCloud', 'Docker', 'SpringBoot', 'Junit', 'DataWarehouse'],
     status: 'offline',
     featured: true,
@@ -90,7 +116,6 @@ const projects = [
     id: 'agileassessment',
     icon: '⏪',
     title: 'Agile Assessment',
-    desc: 'Plataforma de avaliação 360° baseada na Escala Likert para acompanhamento de desempenho, feedbacks internos e evolução de equipes Scrum.',
     tags: ['Python', 'Flask', 'TinyDB', 'HTML', 'CSS'],
     status: 'offline',
     featured: false,
@@ -101,7 +126,6 @@ const projects = [
     id: 'dataflow',
     icon: '🔄',
     title: 'DataFlow',
-    desc: 'Plataforma de configuração e gerenciamento de pipelines de dados, permitindo mapeamento de metadados, regras de negócio e análise operacional.',
     tags: ['Java', 'SpringBoot', 'Vue.js', 'JavaScript', 'MySQL', 'HTML', 'CSS'],
     status: 'offline',
     featured: true,
@@ -112,7 +136,6 @@ const projects = [
     id: 'geodoc',
     icon: '📝',
     title: 'GeoDoc',
-    desc: 'Plataforma de gestão e controle documental para centralização, organização e acompanhamento de documentos digitais em ambiente corporativo.',
     tags: ['Next.js', 'Docker', 'PostgreSQL', 'DataWarehouse', 'SonarCloud', 'Springboot', 'Claude MCP', 'MDX', 'typescript'],
     status: 'offline',
     featured: true,
@@ -123,7 +146,6 @@ const projects = [
     id: 'tauriplanner',
     icon: '/tauriplanner/tauri_planner.svg',
     title: 'Tauri Planner',
-    desc: 'Aplicativo desktop para gestão de projetos por etapas com peso e progresso automático, quadro Kanban, linha do tempo (Gantt), templates reutilizáveis e cadastro de clientes com validação de CPF/CNPJ.',
     tags: ['Tauri', 'Rust', 'Vue.js', 'TypeScript', 'PostgreSQL','Linux Server','Cloudflared Tunnel'],
     status: 'online',
     featured: true,
@@ -135,7 +157,6 @@ const projects = [
     id: 'visiondata',
     icon: '🧠',
     title: 'VisionData',
-    desc: 'Plataforma de Business Intelligence para consolidação de tickets de suporte, busca inteligente de soluções recorrentes e geração de insights estratégicos e preditivos.',
     tags: ['Go', 'Nuxt.js', 'Python', 'Elasticsearch', 'MLFlow', 'SQL Server', 'Docker'],
     status: 'offline',
     featured: true,
@@ -143,6 +164,11 @@ const projects = [
     repo: 'https://github.com/iNineBD/VisionData-6Sem2025Main',
   },
 ];
+
+// Injeta a descrição do idioma ativo em cada projeto.
+const projects = computed(() =>
+  baseProjects.map(p => ({ ...p, desc: descriptions[locale.value][p.id] }))
+);
 
 const categoryMap = {
   Backend:  ['Java', 'SpringBoot', 'Python', 'Rust', 'Go', 'Flask', 'Junit'],
@@ -160,6 +186,11 @@ const categoryList = ['todos', ...Object.keys(categoryMap)];
 const activeCategory = ref('todos');
 const activeTech = ref(null);
 
+// 'todos' é o valor interno do filtro; só o rótulo exibido muda por idioma.
+function catLabel(cat) {
+  return cat === 'todos' ? ui.value.all : cat;
+}
+
 function selectCategory(cat) {
   activeCategory.value = cat;
   activeTech.value = null;
@@ -168,7 +199,7 @@ function selectCategory(cat) {
 const availableTechs = computed(() => {
   if (activeCategory.value === 'todos') return [];
   return categoryMap[activeCategory.value].filter(tech =>
-    projects.some(p => p.tags.includes(tech))
+    projects.value.some(p => p.tags.includes(tech))
   );
 });
 
@@ -177,10 +208,10 @@ const onlineFirst = list =>
   [...list].sort((a, b) => (a.status === 'online' ? 0 : 1) - (b.status === 'online' ? 0 : 1));
 
 const filtered = computed(() => {
-  if (activeCategory.value === 'todos') return onlineFirst(projects);
+  if (activeCategory.value === 'todos') return onlineFirst(projects.value);
   const techs = categoryMap[activeCategory.value];
-  if (activeTech.value) return onlineFirst(projects.filter(p => p.tags.includes(activeTech.value)));
-  return onlineFirst(projects.filter(p => p.tags.some(t => techs.includes(t))));
+  if (activeTech.value) return onlineFirst(projects.value.filter(p => p.tags.includes(activeTech.value)));
+  return onlineFirst(projects.value.filter(p => p.tags.some(t => techs.includes(t))));
 });
 
 const selectedProject = ref(null);

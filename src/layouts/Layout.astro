@@ -21,6 +21,11 @@ const { title = 'Caio Sousa — Portfólio', description = 'Portfólio de desenv
         const t = localStorage.getItem('theme');
         if (t && t !== 'dark') document.documentElement.dataset.theme = t;
       } catch (e) {}
+      // Aplica o idioma salvo antes da pintura. 'pt-BR' é o padrão (do HTML).
+      try {
+        const l = localStorage.getItem('lang');
+        if (l === 'en') document.documentElement.lang = 'en';
+      } catch (e) {}
     </script>
   </head>
   <body>

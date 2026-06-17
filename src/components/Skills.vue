@@ -28,13 +28,21 @@
 </template>
 
 <script setup>
+import { tr } from '../i18n/locale.js';
+
+const t = tr({
+  pt: { levels: ['Iniciante', 'Aprendiz', 'Intermediário', 'Avançado', 'Experiente', 'Especialista'] },
+  en: { levels: ['Beginner', 'Apprentice', 'Intermediate', 'Advanced', 'Proficient', 'Specialist'] },
+});
+
 function levelLabel(level) {
-  if (level <= 30) return 'Iniciante';
-  if (level <= 50) return 'Aprendiz';
-  if (level <= 65) return 'Intermediário';
-  if (level <= 80) return 'Avançado';
-  if (level <= 95) return 'Experiente';
-  return 'Especialista';
+  const L = t.value.levels;
+  if (level <= 30) return L[0];
+  if (level <= 50) return L[1];
+  if (level <= 65) return L[2];
+  if (level <= 80) return L[3];
+  if (level <= 95) return L[4];
+  return L[5];
 }
 
 const groups = [

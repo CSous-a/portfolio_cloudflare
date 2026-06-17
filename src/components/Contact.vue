@@ -1,12 +1,12 @@
 <template>
   <section id="contact" class="section contact-section">
     <div class="container">
-      <h2 class="section-title">contact</h2>
+      <h2 class="section-title">{{ t.title }}</h2>
       <div class="contact-grid">
         <div class="contact-info">
           <p class="contact-intro">
-            Pronto para trabalhar juntos? Manda uma mensagem.<br />
-            <span class="accent">Respondo rápido.</span>
+            {{ t.intro }}<br />
+            <span class="accent">{{ t.introAccent }}</span>
           </p>
           <div class="contact-links">
             <a
@@ -29,42 +29,42 @@
 
         <form class="contact-form" @submit.prevent="send">
           <div class="form-group">
-            <label class="form-label">// nome</label>
+            <label class="form-label">// {{ t.labelName }}</label>
             <input
               v-model="form.name"
               class="form-input"
               type="text"
-              placeholder="seu nome"
+              :placeholder="t.phName"
               required
             />
           </div>
           <div class="form-group">
-            <label class="form-label">// email</label>
+            <label class="form-label">// {{ t.labelEmail }}</label>
             <input
               v-model="form.email"
               class="form-input"
               type="email"
-              placeholder="seu@email.com"
+              :placeholder="t.phEmail"
               required
             />
           </div>
           <div class="form-group">
-            <label class="form-label">// mensagem</label>
+            <label class="form-label">// {{ t.labelMessage }}</label>
             <textarea
               v-model="form.message"
               class="form-input form-textarea"
-              placeholder="Olá, quero conversar sobre..."
+              :placeholder="t.phMessage"
               rows="5"
               required
             ></textarea>
           </div>
           <button type="submit" class="pixel-btn" :disabled="sending || sent">
-            <span v-if="sending">// enviando...</span>
-            <span v-else-if="sent">✓ enviado!</span>
-            <span v-else>> enviar mensagem</span>
+            <span v-if="sending">// {{ t.sending }}</span>
+            <span v-else-if="sent">✓ {{ t.sent }}</span>
+            <span v-else>> {{ t.submit }}</span>
           </button>
-          <p v-if="sent" class="success-msg">Mensagem recebida! Falarei em breve.</p>
-          <p v-if="error" class="error-msg">Erro ao enviar. Tente novamente ou manda direto pro email.</p>
+          <p v-if="sent" class="success-msg">{{ t.successMsg }}</p>
+          <p v-if="error" class="error-msg">{{ t.errorMsg }}</p>
         </form>
       </div>
     </div>
@@ -73,6 +73,44 @@
 
 <script setup>
 import { ref, reactive } from 'vue';
+import { tr } from '../i18n/locale.js';
+
+const t = tr({
+  pt: {
+    title: 'contato',
+    intro: 'Pronto para trabalhar juntos? Manda uma mensagem.',
+    introAccent: 'Respondo rápido.',
+    labelName: 'nome',
+    labelEmail: 'email',
+    labelMessage: 'mensagem',
+    phName: 'seu nome',
+    phEmail: 'seu@email.com',
+    phMessage: 'Olá, quero conversar sobre...',
+    sending: 'enviando...',
+    sent: 'enviado!',
+    submit: 'enviar mensagem',
+    successMsg: 'Mensagem recebida! Falarei em breve.',
+    errorMsg: 'Erro ao enviar. Tente novamente ou manda direto pro email.',
+    mailSubject: (name) => `[Portfólio] Mensagem de ${name}`,
+  },
+  en: {
+    title: 'contact',
+    intro: 'Ready to work together? Drop me a message.',
+    introAccent: 'I reply fast.',
+    labelName: 'name',
+    labelEmail: 'email',
+    labelMessage: 'message',
+    phName: 'your name',
+    phEmail: 'you@email.com',
+    phMessage: 'Hi, I\'d like to talk about...',
+    sending: 'sending...',
+    sent: 'sent!',
+    submit: 'send message',
+    successMsg: 'Message received! I\'ll be in touch soon.',
+    errorMsg: 'Failed to send. Try again or email me directly.',
+    mailSubject: (name) => `[Portfolio] Message from ${name}`,
+  },
+});
 
 const WEB3FORMS_KEY = import.meta.env.PUBLIC_WEB3FORMS_KEY;
 
@@ -96,7 +134,7 @@ async function send() {
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
         access_key: WEB3FORMS_KEY,
-        subject: `[Portfólio] Mensagem de ${form.name}`,
+        subject: t.value.mailSubject(form.name),
         name: form.name,
         email: form.email,
         message: form.message,

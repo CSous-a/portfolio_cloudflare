@@ -15,9 +15,20 @@
         </ul>
 
         <button
+          class="lang-toggle"
+          :title="t.langTitle"
+          :aria-label="t.langTitle"
+          @click="toggleLocale"
+        >
+          <span class="lang-seg" :class="{ active: locale === 'pt' }">PT</span>
+          <span class="lang-sep">/</span>
+          <span class="lang-seg" :class="{ active: locale === 'en' }">EN</span>
+        </button>
+
+        <button
           class="theme-toggle"
-          :title="`Tema: ${currentLabel} — clique para alternar`"
-          :aria-label="`Tema atual: ${currentLabel}. Clique para alternar.`"
+          :title="t.themeTitle(currentLabel)"
+          :aria-label="t.themeAria(currentLabel)"
           @click="cycleTheme"
         >
           <span class="toggle-track" :class="`is-${theme}`">
@@ -59,25 +70,43 @@
 
 <script setup>
 import { ref, computed, onMounted, onUnmounted } from 'vue';
+import { locale, toggleLocale, tr } from '../i18n/locale.js';
 
 const isScrolled = ref(false);
 const menuOpen = ref(false);
 
-const links = [
-  { href: '#about', label: 'sobre' },
-  { href: '#skills', label: 'skills' },
-  { href: '#projects', label: 'projetos' },
-  { href: '#contact', label: 'contato' },
-];
+const t = tr({
+  pt: {
+    links: [
+      { href: '#about', label: 'sobre' },
+      { href: '#skills', label: 'skills' },
+      { href: '#projects', label: 'projetos' },
+      { href: '#contact', label: 'contato' },
+    ],
+    langTitle: 'Mudar idioma (Português / English)',
+    themeLabels: { dark: 'escuro', light: 'claro', cyberpunk: 'cyberpunk' },
+    themeTitle: (l) => `Tema: ${l} — clique para alternar`,
+    themeAria: (l) => `Tema atual: ${l}. Clique para alternar.`,
+  },
+  en: {
+    links: [
+      { href: '#about', label: 'about' },
+      { href: '#skills', label: 'skills' },
+      { href: '#projects', label: 'projects' },
+      { href: '#contact', label: 'contact' },
+    ],
+    langTitle: 'Switch language (Português / English)',
+    themeLabels: { dark: 'dark', light: 'light', cyberpunk: 'cyberpunk' },
+    themeTitle: (l) => `Theme: ${l} — click to cycle`,
+    themeAria: (l) => `Current theme: ${l}. Click to cycle.`,
+  },
+});
+
+const links = computed(() => t.value.links);
 
 const themeOrder = ['dark', 'light', 'cyberpunk'];
-const themeLabels = {
-  dark: 'escuro',
-  light: 'claro',
-  cyberpunk: 'cyberpunk',
-};
 const theme = ref('dark');
-const currentLabel = computed(() => themeLabels[theme.value] ?? theme.value);
+const currentLabel = computed(() => t.value.themeLabels[theme.value] ?? theme.value);
 
 function applyTheme(t) {
   if (t === 'dark') delete document.documentElement.dataset.theme;
@@ -159,6 +188,44 @@ onUnmounted(() => {
   display: flex;
   align-items: center;
   gap: 1.75rem;
+}
+
+/* Seletor de idioma — pílula PT / EN ao lado do tema */
+.lang-toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+  flex-shrink: 0;
+  height: 2.25rem;
+  padding: 0 0.6rem;
+  border: 1px solid var(--border);
+  border-radius: 1.125rem;
+  background: var(--bg-card);
+  cursor: pointer;
+  font-family: 'Press Start 2P', monospace;
+  font-size: 0.5rem;
+  letter-spacing: 0.5px;
+  transition: border-color 0.2s, transform 0.2s, box-shadow 0.3s;
+}
+
+.lang-toggle:hover {
+  border-color: var(--green);
+  transform: translateY(-1px);
+  box-shadow: 0 0 10px color-mix(in srgb, var(--green) 25%, transparent);
+}
+
+.lang-seg {
+  color: var(--text-dim);
+  transition: color 0.2s, text-shadow 0.2s;
+}
+
+.lang-seg.active {
+  color: var(--green);
+  text-shadow: 0 0 8px color-mix(in srgb, var(--green) 50%, transparent);
+}
+
+.lang-sep {
+  color: var(--border);
 }
 
 /* Seletor de temas — botão circular único que cicla dark → light → cyberpunk */

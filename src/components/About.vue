@@ -1,7 +1,7 @@
 <template>
   <section id="about" class="section">
     <div class="container">
-      <h2 class="section-title">sobre_mim</h2>
+      <h2 class="section-title">{{ t.title }}</h2>
       <div class="about-grid">
         <div class="about-text">
           <div class="terminal-window">
@@ -9,7 +9,7 @@
               <span class="dot red"></span>
               <span class="dot yellow"></span>
               <span class="dot green"></span>
-              <span class="terminal-title">sobre.txt</span>
+              <span class="terminal-title">{{ t.file }}</span>
             </div>
             <div class="terminal-body">
               <p v-for="(line, i) in lines" :key="i" class="terminal-line">
@@ -39,47 +39,62 @@
 </template>
 
 <script setup>
-const lines = [
-  { comment: true, text: '// quem sou eu' },
-  { key: 'Nome', val: '"Caio Sousa"' },
-  { key: 'Localização', val: '"Brasil"' },
-  { key: 'Cargo', val: '"Software Developer"' },
-  { comment: true, text: '// o que faço' },
-  { key: 'Foco', val: '["APIs REST", "Microsserviços", "GeoData", "Banco de Dados", "DevOps"]', type: 'array' },
-  { key: 'disponível', val: 'true', type: 'bool' },
-  { comment: true, text: '// idiomas' },
-  { key: 'Idiomas', val: '["Inglês - B2", "Português - Nativo"]', type: 'array' },
-  { comment: true, text: '// fora do teclado' },
-  { key: 'Hobbies', val: '["trilhas", "café", "games", "motos"]', type: 'array' },
-];
+import { computed } from 'vue';
+import { tr } from '../i18n/locale.js';
 
-const cards = [
-  {
-    icon: '⚡',
-    title: 'Performance',
-    desc: 'Código limpo e rápido, sem gordura. Cada byte importa.',
+const t = tr({
+  pt: {
+    title: 'sobre_mim',
+    file: 'sobre.txt',
+    lines: [
+      { comment: true, text: '// quem sou eu' },
+      { key: 'Nome', val: '"Caio Sousa"' },
+      { key: 'Localização', val: '"Brasil"' },
+      { key: 'Cargo', val: '"Software Developer"' },
+      { comment: true, text: '// o que faço' },
+      { key: 'Foco', val: '["APIs REST", "Microsserviços", "GeoData", "Banco de Dados", "DevOps"]', type: 'array' },
+      { key: 'disponível', val: 'true', type: 'bool' },
+      { comment: true, text: '// idiomas' },
+      { key: 'Idiomas', val: '["Inglês - B2", "Português - Nativo"]', type: 'array' },
+      { comment: true, text: '// fora do teclado' },
+      { key: 'Hobbies', val: '["trilhas", "café", "games", "motos"]', type: 'array' },
+    ],
+    cards: [
+      { icon: '⚡', title: 'Performance', desc: 'Código limpo e rápido, sem gordura. Cada byte importa.' },
+      { icon: '🔌', title: 'APIs', desc: 'Endpoints bem definidos, contratos claros e integrações que escalam.' },
+      { icon: '🔧', title: 'Engenharia', desc: 'Arquitetura sólida para sistemas que crescem.' },
+      { icon: '🌍', title: 'Geodados', desc: 'Especialidade em serviços geoespaciais e visualização de mapas.' },
+      { icon: '🎲', title: 'Banco de dados', desc: 'Formação em bancos de dados escalonáveis e ágeis.' },
+    ],
   },
-  {
-    icon: '🔌',
-    title: 'APIs',
-    desc: 'Endpoints bem definidos, contratos claros e integrações que escalam.',
+  en: {
+    title: 'about_me',
+    file: 'about.txt',
+    lines: [
+      { comment: true, text: '// who i am' },
+      { key: 'Name', val: '"Caio Sousa"' },
+      { key: 'Location', val: '"Brazil"' },
+      { key: 'Role', val: '"Software Developer"' },
+      { comment: true, text: '// what i do' },
+      { key: 'Focus', val: '["REST APIs", "Microservices", "GeoData", "Databases", "DevOps"]', type: 'array' },
+      { key: 'available', val: 'true', type: 'bool' },
+      { comment: true, text: '// languages' },
+      { key: 'Languages', val: '["English - B2", "Portuguese - Native"]', type: 'array' },
+      { comment: true, text: '// away from the keyboard' },
+      { key: 'Hobbies', val: '["hiking", "coffee", "games", "motorcycles"]', type: 'array' },
+    ],
+    cards: [
+      { icon: '⚡', title: 'Performance', desc: 'Clean, fast code with no fat. Every byte counts.' },
+      { icon: '🔌', title: 'APIs', desc: 'Well-defined endpoints, clear contracts and integrations that scale.' },
+      { icon: '🔧', title: 'Engineering', desc: 'Solid architecture for systems that grow.' },
+      { icon: '🌍', title: 'Geodata', desc: 'Specialized in geospatial services and map visualization.' },
+      { icon: '🎲', title: 'Databases', desc: 'Background in scalable, agile databases.' },
+    ],
   },
-  {
-    icon: '🔧',
-    title: 'Engenharia',
-    desc: 'Arquitetura sólida para sistemas que crescem.',
-  },
-  {
-    icon: '🌍',
-    title: 'Geodados',
-    desc: 'Especialidade em serviços geoespaciais e visualização de mapas.',
-  },
-  {
-    icon: '🎲',
-    title: 'Banco de dados',
-    desc: 'Formação em bancos de dados escalonáveis e ágeis.',
-  },
-];
+});
+
+const lines = computed(() => t.value.lines);
+const cards = computed(() => t.value.cards);
 </script>
 
 <style scoped>
