@@ -40,7 +40,10 @@
                   }"
                 />
                 <div v-else class="placeholder">
-                  <span class="placeholder-icon">{{ project.icon }}</span>
+                  <span class="placeholder-icon">
+                    <img v-if="iconIsImage" :src="project.icon" :alt="project.title" />
+                    <template v-else>{{ project.icon }}</template>
+                  </span>
                   <span class="placeholder-label">// {{ slide.title ? slide.title.toLowerCase().replace(/ /g, '_') : 'preview' }}.png</span>
                 </div>
               </div>
@@ -90,7 +93,10 @@
           <div class="modal-right">
 
             <div class="modal-header">
-              <span class="m-icon">{{ project.icon }}</span>
+              <span class="m-icon">
+                <img v-if="iconIsImage" :src="project.icon" :alt="project.title" />
+                <template v-else>{{ project.icon }}</template>
+              </span>
               <div class="m-title-group">
                 <h2 class="m-title">{{ project.title }}</h2>
                 <span class="m-status" :class="project.status">● {{ project.status }}</span>
@@ -162,6 +168,11 @@ const videoRefs = reactive({});
 const isFullscreen = ref(false);
 
 const currentSlideData = computed(() => slides.value[currentSlide.value]);
+
+// Ícone do projeto pode ser um emoji (texto) ou um caminho de imagem a partir de /public.
+const iconIsImage = computed(
+  () => typeof props.project?.icon === 'string' && props.project.icon.startsWith('/')
+);
 
 watch(detailRef, (val) => {
   if (val?.slides) slides.value = val.slides;
@@ -327,6 +338,12 @@ onUnmounted(() => {
 }
 
 .placeholder-icon  { font-size: 3rem; }
+.placeholder-icon img {
+  width: 4rem;
+  height: 4rem;
+  object-fit: contain;
+  display: block;
+}
 .placeholder-label {
   font-family: 'VT323', monospace;
   font-size: 0.875rem;
@@ -438,6 +455,12 @@ onUnmounted(() => {
 }
 
 .m-icon { font-size: 2.25rem; }
+.m-icon img {
+  width: 2.75rem;
+  height: 2.75rem;
+  object-fit: contain;
+  display: block;
+}
 
 .m-title-group { display: flex; flex-direction: column; gap: 0.375rem; }
 

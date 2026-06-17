@@ -119,6 +119,17 @@ const projects = [
     repo: 'https://github.com/CSous-a/supdoc',
   },
   {
+    id: 'tauriplanner',
+    icon: '/tauriplanner/tauri_planner.svg',
+    title: 'Tauri Planner',
+    desc: 'Aplicativo desktop para gestão de projetos por etapas com peso e progresso automático, quadro Kanban, linha do tempo (Gantt), templates reutilizáveis e cadastro de clientes com validação de CPF/CNPJ.',
+    tags: ['Tauri', 'Rust', 'Vue.js', 'TypeScript', 'PostgreSQL'],
+    status: 'online',
+    featured: true,
+    demo: null,
+    repo: 'https://github.com/CSous-a/tauriKanbam',
+  },
+  {
     id: 'visiondata',
     icon: '🧠',
     title: 'VisionData',
@@ -135,8 +146,13 @@ const categoryMap = {
   Backend:  ['Java', 'SpringBoot', 'Python', 'Rust', 'Go', 'Flask', 'Junit'],
   DevOps:   ['Docker', 'SonarCloud', 'Claude MCP' , 'Linux Server'],
   Database: ['PostgreSQL', 'PostGIS', 'MongoDB', 'MySQL', 'Oracle', 'TinyDB', 'Elasticsearch', 'SQL Server', 'DataWarehouse', 'MLFlow'],
-  Frontend: ['Vue.js', 'Vuetify', 'React', 'Next.js', 'Nuxt.js', 'TypeScript', 'JavaScript', 'HTML', 'CSS', 'MDX', 'typescript'],
+  Frontend: ['Vue.js', 'Vuetify', 'React', 'Next.js', 'Nuxt.js', 'Tauri', 'TypeScript', 'JavaScript', 'HTML', 'CSS', 'MDX', 'typescript'],
 };
+
+// Ícone pode ser um emoji (texto) ou um caminho de imagem a partir de /public.
+function isImageIcon(icon) {
+  return typeof icon === 'string' && icon.startsWith('/');
+}
 
 const categoryList = ['todos', ...Object.keys(categoryMap)];
 const activeCategory = ref('todos');
@@ -401,6 +417,13 @@ watch(filtered, async () => {
 
 .card-icon {
   font-size: 2rem;
+}
+
+.card-icon img {
+  width: 2.5rem;
+  height: 2.5rem;
+  object-fit: contain;
+  display: block;
 }
 
 .card-title {
