@@ -36,10 +36,14 @@
               </div>
               <div class="card-links">
                 <a v-if="project.demo" :href="project.demo" target="_blank" rel="noopener noreferrer" class="card-link">demo</a>
+                <a v-if="project.download" :href="project.download" download class="card-link" @click.stop>download</a>
                 <a v-if="project.repo" :href="project.repo" target="_blank" rel="noopener noreferrer" class="card-link">código</a>
               </div>
             </div>
-            <div class="card-icon">{{ project.icon }}</div>
+            <div class="card-icon">
+              <img v-if="isImageIcon(project.icon)" :src="project.icon" :alt="project.title" />
+              <template v-else>{{ project.icon }}</template>
+            </div>
             <h3 class="card-title">{{ project.title }}</h3>
             <p class="card-desc">{{ project.desc }}</p>
           </div>
@@ -116,6 +120,18 @@ const projects = [
     repo: 'https://github.com/CSous-a/supdoc',
   },
   {
+    id: 'tauriplanner',
+    icon: '/tauriplanner/tauri_planner.svg',
+    title: 'Tauri Planner',
+    desc: 'Aplicativo desktop para gestão de projetos por etapas com peso e progresso automático, quadro Kanban, linha do tempo (Gantt), templates reutilizáveis e cadastro de clientes com validação de CPF/CNPJ.',
+    tags: ['Tauri', 'Rust', 'Vue.js', 'TypeScript', 'PostgreSQL'],
+    status: 'online',
+    featured: true,
+    demo: null,
+    download: '/tauriplanner/TauriPlanner_0.1.0_x64-setup.exe',
+    repo: 'https://github.com/CSous-a/tauriKanbam',
+  },
+  {
     id: 'visiondata',
     icon: '🧠',
     title: 'VisionData',
@@ -132,8 +148,13 @@ const categoryMap = {
   Backend:  ['Java', 'SpringBoot', 'Python', 'Rust', 'Go', 'Flask', 'Junit'],
   DevOps:   ['Docker', 'SonarCloud', 'Claude MCP' , 'Linux Server'],
   Database: ['PostgreSQL', 'PostGIS', 'MongoDB', 'MySQL', 'Oracle', 'TinyDB', 'Elasticsearch', 'SQL Server', 'DataWarehouse', 'MLFlow'],
-  Frontend: ['Vue.js', 'Vuetify', 'React', 'Next.js', 'Nuxt.js', 'TypeScript', 'JavaScript', 'HTML', 'CSS', 'MDX', 'typescript'],
+  Frontend: ['Vue.js', 'Vuetify', 'React', 'Next.js', 'Nuxt.js', 'Tauri', 'TypeScript', 'JavaScript', 'HTML', 'CSS', 'MDX', 'typescript'],
 };
+
+// Ícone pode ser um emoji (texto) ou um caminho de imagem a partir de /public.
+function isImageIcon(icon) {
+  return typeof icon === 'string' && icon.startsWith('/');
+}
 
 const categoryList = ['todos', ...Object.keys(categoryMap)];
 const activeCategory = ref('todos');
@@ -398,6 +419,13 @@ watch(filtered, async () => {
 
 .card-icon {
   font-size: 2rem;
+}
+
+.card-icon img {
+  width: 2.5rem;
+  height: 2.5rem;
+  object-fit: contain;
+  display: block;
 }
 
 .card-title {

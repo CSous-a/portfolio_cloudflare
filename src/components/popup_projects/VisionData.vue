@@ -1,10 +1,10 @@
 <script setup>
 const slides = [
-  { image: '/visionDataLogo.png', fit: 'contain', title: null, desc: null },
-  { image: '/visionDataSearch.png', fit:'contain', title: 'Busca Inteligente', desc: 'Busca por palavras-chave em base de conhecimento estruturada com Elasticsearch para localizar soluções de tickets anteriores.' },
-  { video: '/visionDataMLInsight.mp4', fit:'contain', title: 'Insights por IA', desc: 'Geração de insights preditivos com MLFlow para identificação de padrões recorrentes e previsão de volume de chamados.' },
-  { image: '/visionDataDashboard.png', fit:'contain', title: 'Dashboard de Métricas', desc: 'Visualizações de volume de tickets, tendências e previsões com conformidade à LGPD — anonimização e logs de auditoria.' },
-  { video: 'visionDataUserMenagement.mp4', fit:'contain', title: 'Controle de Acesso (RBAC)', desc: 'Gestão de permissões por papéis com logs de auditoria completos e mecanismos de exclusão e anonimização de dados pessoais.' },
+  { image: '/visiondata/visionDataLogo.png', fit: 'contain', title: null, desc: null },
+  { image: '/visiondata/visionDataSearch.png', fit:'contain', title: 'Busca Inteligente', desc: 'Busca por palavras-chave em base de conhecimento estruturada com Elasticsearch para localizar soluções de tickets anteriores.' },
+  { video: '/visiondata/visionDataMLInsight.mp4', fit:'contain', title: 'Insights por IA', desc: 'Geração de insights preditivos com MLFlow para identificação de padrões recorrentes e previsão de volume de chamados.' },
+  { image: '/visiondata/visionDataDashboard.png', fit:'contain', title: 'Dashboard de Métricas', desc: 'Visualizações de volume de tickets, tendências e previsões com conformidade à LGPD — anonimização e logs de auditoria.' },
+  { video: '/visiondata/visionDataUserMenagement.mp4', fit:'contain', title: 'Controle de Acesso (RBAC)', desc: 'Gestão de permissões por papéis com logs de auditoria completos e mecanismos de exclusão e anonimização de dados pessoais.' },
 ]
 defineExpose({ slides })
 </script>
