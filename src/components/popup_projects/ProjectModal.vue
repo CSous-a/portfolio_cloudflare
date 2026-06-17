@@ -151,6 +151,7 @@ const componentMap = {
   dataflow:        defineAsyncComponent(() => import('./DataFlow.vue')),
   geodoc:          defineAsyncComponent(() => import('./GeoDoc.vue')),
   visiondata:      defineAsyncComponent(() => import('./VisionData.vue')),
+  tauriplanner:    defineAsyncComponent(() => import('./TauriPlanner.vue')),
 };
 
 const detailComponent = computed(() => componentMap[props.project?.id]);

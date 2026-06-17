@@ -39,7 +39,10 @@
                 <a v-if="project.repo" :href="project.repo" target="_blank" rel="noopener noreferrer" class="card-link">código</a>
               </div>
             </div>
-            <div class="card-icon">{{ project.icon }}</div>
+            <div class="card-icon">
+              <img v-if="isImageIcon(project.icon)" :src="project.icon" :alt="project.title" />
+              <template v-else>{{ project.icon }}</template>
+            </div>
             <h3 class="card-title">{{ project.title }}</h3>
             <p class="card-desc">{{ project.desc }}</p>
           </div>
