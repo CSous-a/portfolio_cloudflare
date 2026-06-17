@@ -1,47 +1,61 @@
-<<<<<<< HEAD
-# portfolio_cloudflare
-=======
-# Astro Starter Kit: Minimal
+# Portfólio — Caio Sousa
 
-```sh
-pnpm create astro@latest -- --template minimal
-```
+Portfólio pessoal de desenvolvimento, construído com uma identidade visual **pixel-art / retrô-terminal**. A ideia é fugir do portfólio genérico: em vez de uma lista estática de projetos, o site é uma vitrine interativa onde cada trabalho pode ser explorado a fundo — com print, vídeo, descrição e stack — sem sair da página.
 
-> 🧑‍🚀 **Seasoned astronaut?** Delete this file. Have fun!
+## 🎯 A proposta
 
-## 🚀 Project Structure
+Para quem está visitando, o objetivo é simples: **entender rápido quem eu sou e o que eu já construí.**
 
-Inside of your Astro project, you'll see the following folders and files:
+- **Apresentação direta** — hero, skills, sobre e contato em uma única página de rolagem.
+- **Projetos como protagonistas** — cada projeto abre um modal com carrossel de imagens/vídeos, descrição detalhada, tecnologias usadas e links para código, demo ou download.
+- **Filtros por área e tecnologia** — dá pra filtrar os projetos por Backend, Frontend, DevOps ou Database e, dentro de cada um, por tecnologia específica (Java, Vue, Docker, etc.).
+- **Prioridade de destaque** — projetos no ar (`online`) aparecem antes dos arquivados (`offline`), sinalizando o que está vivo agora.
+- **3 temas** — escuro, claro e cyberpunk, alternáveis na hora (com um efeito de _glitch_ na transição).
+
+Tudo pensado para ser leve, responsivo e funcionar bem tanto no desktop (com rolagem full-page) quanto no mobile.
+
+## 🛠️ Tecnologias
+
+- **[Astro](https://astro.build)** — framework do site (geração estática, zero JS por padrão).
+- **[Vue 3](https://vuejs.org)** — componentes interativos (cards de projeto, modais, filtros, troca de tema).
+- **CSS puro** com variáveis de tema (sem framework de UI) — fontes pixel `Press Start 2P` e `VT323`.
+- **pnpm** — gerenciador de pacotes.
+- Deploy pensado para **Cloudflare**.
+
+## 📁 Estrutura
 
 ```text
 /
-├── public/
+├── public/                  # assets estáticos (imagens, vídeos, instaladores)
+│   ├── tauriplanner/         # mídia de cada projeto, separada por pasta
+│   └── visiondata/
+├── scripts/
+│   └── clean-logo.cjs        # utilitário que limpa as rebarbas do logo vetorizado
 ├── src/
-│   └── pages/
-│       └── index.astro
+│   ├── components/
+│   │   ├── Hero.vue / Navbar.vue / Skills.vue / About.vue / Contact.vue / Footer.vue
+│   │   ├── Projects.vue      # grade de projetos, filtros e ordenação
+│   │   └── popup_projects/   # um componente de detalhe por projeto + o ProjectModal
+│   ├── layouts/Layout.astro
+│   ├── pages/index.astro
+│   └── styles/global.css     # paleta e definição dos 3 temas
 └── package.json
 ```
 
-Astro looks for `.astro` or `.md` files in the `src/pages/` directory. Each page is exposed as a route based on its file name.
+### Como adicionar um projeto
 
-There's nothing special about `src/components/`, but that's where we like to put any Astro/React/Vue/Svelte/Preact components.
+1. Adicione um objeto ao array `projects` em `src/components/Projects.vue` (id, título, ícone, descrição, tags, status e links).
+2. Crie o componente de detalhe em `src/components/popup_projects/<Nome>.vue` expondo `slides` (imagens/vídeos do carrossel) e registre-o no `componentMap` de `ProjectModal.vue`.
+3. Coloque as mídias em `public/<projeto>/` (uma pasta por projeto).
 
-Any static assets, like images, can be placed in the `public/` directory.
+## 🧞 Comandos
 
-## 🧞 Commands
+Rodados a partir da raiz do projeto:
 
-All commands are run from the root of the project, from a terminal:
-
-| Command                   | Action                                           |
-| :------------------------ | :----------------------------------------------- |
-| `pnpm install`             | Installs dependencies                            |
-| `pnpm dev`             | Starts local dev server at `localhost:4321`      |
-| `pnpm build`           | Build your production site to `./dist/`          |
-| `pnpm preview`         | Preview your build locally, before deploying     |
-| `pnpm astro ...`       | Run CLI commands like `astro add`, `astro check` |
-| `pnpm astro -- --help` | Get help using the Astro CLI                     |
-
-## 👀 Want to learn more?
-
-Feel free to check [our documentation](https://docs.astro.build) or jump into our [Discord server](https://astro.build/chat).
->>>>>>> 7bd4f7b ("Initial commit from Astro")
+| Comando         | Ação                                                |
+| :-------------- | :-------------------------------------------------- |
+| `pnpm install`  | Instala as dependências                             |
+| `pnpm dev`      | Sobe o servidor local em `localhost:4321`           |
+| `pnpm build`    | Gera o site de produção em `./dist/`                |
+| `pnpm preview`  | Pré-visualiza o build localmente antes do deploy    |
+| `pnpm astro ...`| Comandos da CLI do Astro (`astro add`, `astro check`)|
