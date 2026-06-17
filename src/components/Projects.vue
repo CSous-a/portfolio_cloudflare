@@ -172,11 +172,15 @@ const availableTechs = computed(() => {
   );
 });
 
+// Online primeiro (prioridade visual); empate mantém a ordem original (sort estável).
+const onlineFirst = list =>
+  [...list].sort((a, b) => (a.status === 'online' ? 0 : 1) - (b.status === 'online' ? 0 : 1));
+
 const filtered = computed(() => {
-  if (activeCategory.value === 'todos') return projects;
+  if (activeCategory.value === 'todos') return onlineFirst(projects);
   const techs = categoryMap[activeCategory.value];
-  if (activeTech.value) return projects.filter(p => p.tags.includes(activeTech.value));
-  return projects.filter(p => p.tags.some(t => techs.includes(t)));
+  if (activeTech.value) return onlineFirst(projects.filter(p => p.tags.includes(activeTech.value)));
+  return onlineFirst(projects.filter(p => p.tags.some(t => techs.includes(t))));
 });
 
 const selectedProject = ref(null);
