@@ -124,7 +124,7 @@ const projects = [
     icon: '/tauriplanner/tauri_planner.svg',
     title: 'Tauri Planner',
     desc: 'Aplicativo desktop para gestão de projetos por etapas com peso e progresso automático, quadro Kanban, linha do tempo (Gantt), templates reutilizáveis e cadastro de clientes com validação de CPF/CNPJ.',
-    tags: ['Tauri', 'Rust', 'Vue.js', 'TypeScript', 'PostgreSQL'],
+    tags: ['Tauri', 'Rust', 'Vue.js', 'TypeScript', 'PostgreSQL','Linux Server','Cloudflared Tunnel'],
     status: 'online',
     featured: true,
     demo: null,
@@ -146,7 +146,7 @@ const projects = [
 
 const categoryMap = {
   Backend:  ['Java', 'SpringBoot', 'Python', 'Rust', 'Go', 'Flask', 'Junit'],
-  DevOps:   ['Docker', 'SonarCloud', 'Claude MCP' , 'Linux Server'],
+  DevOps:   ['Docker', 'SonarCloud', 'Claude MCP' , 'Linux Server','Cloudflared Tunnel'],
   Database: ['PostgreSQL', 'PostGIS', 'MongoDB', 'MySQL', 'Oracle', 'TinyDB', 'Elasticsearch', 'SQL Server', 'DataWarehouse', 'MLFlow'],
   Frontend: ['Vue.js', 'Vuetify', 'React', 'Next.js', 'Nuxt.js', 'Tauri', 'TypeScript', 'JavaScript', 'HTML', 'CSS', 'MDX', 'typescript'],
 };
