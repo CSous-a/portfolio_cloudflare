@@ -10,7 +10,7 @@ Para quem está visitando, o objetivo é simples: **entender rápido quem eu sou
 - **Projetos como protagonistas** — cada projeto abre um modal com carrossel de imagens/vídeos, descrição detalhada, tecnologias usadas e links para código, demo ou download.
 - **Filtros por área e tecnologia** — dá pra filtrar os projetos por Backend, Frontend, DevOps ou Database e, dentro de cada um, por tecnologia específica (Java, Vue, Docker, etc.).
 - **Prioridade de destaque** — projetos no ar (`online`) aparecem antes dos arquivados (`offline`), sinalizando o que está vivo agora.
-- **3 temas** — escuro, claro e cyberpunk, alternáveis na hora (com um efeito de _glitch_ na transição).
+- **3 temas** — escuro, claro e cyberpunk, alternáveis na hora (com um efeito de _glitch_ na transição pra ficar maneiro).
 
 Tudo pensado para ser leve, responsivo e funcionar bem tanto no desktop (com rolagem full-page) quanto no mobile.
 
@@ -20,7 +20,7 @@ Tudo pensado para ser leve, responsivo e funcionar bem tanto no desktop (com rol
 - **[Vue 3](https://vuejs.org)** — componentes interativos (cards de projeto, modais, filtros, troca de tema).
 - **CSS puro** com variáveis de tema (sem framework de UI) — fontes pixel `Press Start 2P` e `VT323`.
 - **pnpm** — gerenciador de pacotes.
-- Deploy pensado para **Cloudflare**.
+- Deploy pensado para **Cloudflare**, utilizando vps pessoal para hospedagem de projetos e portfólio.
 
 ## 📁 Estrutura
 
@@ -29,8 +29,6 @@ Tudo pensado para ser leve, responsivo e funcionar bem tanto no desktop (com rol
 ├── public/                  # assets estáticos (imagens, vídeos, instaladores)
 │   ├── tauriplanner/         # mídia de cada projeto, separada por pasta
 │   └── visiondata/
-├── scripts/
-│   └── clean-logo.cjs        # utilitário que limpa as rebarbas do logo vetorizado
 ├── src/
 │   ├── components/
 │   │   ├── Hero.vue / Navbar.vue / Skills.vue / About.vue / Contact.vue / Footer.vue
@@ -38,7 +36,7 @@ Tudo pensado para ser leve, responsivo e funcionar bem tanto no desktop (com rol
 │   │   └── popup_projects/   # um componente de detalhe por projeto + o ProjectModal
 │   ├── layouts/Layout.astro
 │   ├── pages/index.astro
-│   └── styles/global.css     # paleta e definição dos 3 temas
+│   └── styles/global.css
 └── package.json
 ```
 
