@@ -1,6 +1,6 @@
 <script setup>
 const slides = [
-  { image: '/tauriplanner/tauri_planner.svg', fit: 'contain', title: null, desc: null },
+  { image: '/tauriplanner/tauri_planner_display.svg', fit: 'contain', title: null, desc: null },
   { image: '/tauriplanner/login_example.png', fit: 'contain', title: 'Acesso ao sistema', desc: 'Entre com seu usuário e senha. O acesso é restrito: não há autocadastro — as contas são criadas por um administrador. É possível alternar entre tema claro e escuro na própria tela. Na versão de teste, acesse com user: admin, pass: admin.' },
   { image: '/tauriplanner/projetos_example.png', fit: 'contain', title: 'Projetos', desc: 'A tela inicial lista os projetos em andamento. Cada projeto mostra o progresso em porcentagem, calculado pelo peso das etapas concluídas. Clique em um projeto para abri-lo.' },
   { image: '/tauriplanner/steps_example.png', fit: 'contain', title: 'Etapas e progresso', desc: 'O trabalho é dividido em etapas, cada uma com um peso de 1 a 5 e um status (A fazer, Em andamento ou Concluída). O progresso do projeto avança conforme as etapas de maior peso são concluídas.' },

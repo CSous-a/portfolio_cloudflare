@@ -36,6 +36,7 @@
               </div>
               <div class="card-links">
                 <a v-if="project.demo" :href="project.demo" target="_blank" rel="noopener noreferrer" class="card-link">demo</a>
+                <a v-if="project.download" :href="project.download" download class="card-link" @click.stop>download</a>
                 <a v-if="project.repo" :href="project.repo" target="_blank" rel="noopener noreferrer" class="card-link">código</a>
               </div>
             </div>
@@ -127,6 +128,7 @@ const projects = [
     status: 'online',
     featured: true,
     demo: null,
+    download: '/tauriplanner/TauriPlanner_0.1.0_x64-setup.exe',
     repo: 'https://github.com/CSous-a/tauriKanbam',
   },
   {

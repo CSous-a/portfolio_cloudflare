@@ -79,6 +79,12 @@
                 class="pixel-btn"
               >↗ demo</a>
               <a
+                v-if="project.download"
+                :href="project.download"
+                download
+                class="pixel-btn"
+              >↓ instalador (x64)</a>
+              <a
                 v-if="project.repo"
                 :href="project.repo"
                 target="_blank"
